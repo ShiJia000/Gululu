@@ -76,7 +76,7 @@ CREATE TABLE `receive_msg` (
 	`mid` int(11) NOT NULL,
 	`uid` int(11) NOT NULL,
 	`is_read` tinyint NOT NULL DEFAULT 0,
-	`read_timestamp` timestamp,
+	`read_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`mid`, `uid`),
 	FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`mid`) REFERENCES `message` (`mid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -102,7 +102,7 @@ CREATE TABLE `receive_reply` (
 	`rid` int(11) NOT NULL,
 	`uid` int(11) NOT NULL,
 	`is_read` tinyint NOT NULL DEFAULT 0,
-	`read_timestamp` timestamp,
+	`read_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (`rid`, `uid`),
 	FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`rid`) REFERENCES `reply` (`rid`) ON DELETE CASCADE ON UPDATE CASCADE
