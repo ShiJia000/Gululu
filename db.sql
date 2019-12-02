@@ -15,7 +15,7 @@ CREATE TABLE `user` (
   `city` varchar(45) NOT NULL,
   `zipcode` int(5) NOT NULL,
   `address` text NOT NULL,
-  `phone_num` int(11) NOT NULL,
+  `phone_num` bigint NOT NULL,
   `photo` text NOT NULL,
   `self_intro` text NOT NULL,
   `family_intro` text NOT NULL,
