@@ -16,7 +16,7 @@ CREATE TABLE `user` (
   `zipcode` int(5) NOT NULL,
   `address` text NOT NULL,
   `phone_num` bigint NOT NULL,
-  `photo` text NOT NULL,
+  `photo` text,
   `self_intro` text,
   `family_intro` text,
   `profile_timestamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
