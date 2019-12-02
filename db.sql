@@ -1,4 +1,3 @@
--- haochen
 -- CREATE DATABASE
 
 CREATE DATABASE `nextdoor`;
