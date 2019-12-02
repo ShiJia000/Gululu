@@ -58,6 +58,7 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
 	`mid` int(11) NOT NULL AUTO_INCREMENT,
 	`title` varchar(200) NOT NULL,
+	`subject` varchar(200) NOT NULL,
 	`uid` int(11) NOT NULL,
 	`text_body` text NOT NULL,
 	`timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -75,7 +76,7 @@ CREATE TABLE `receive_msg` (
 	`mid` int(11) NOT NULL,
 	`uid` int(11) NOT NULL,
 	`is_read` tinyint NOT NULL DEFAULT 0,
-	`read_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`read_timestamp` timestamp,
 	PRIMARY KEY (`mid`, `uid`),
 	FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`mid`) REFERENCES `message` (`mid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -101,7 +102,7 @@ CREATE TABLE `receive_reply` (
 	`rid` int(11) NOT NULL,
 	`uid` int(11) NOT NULL,
 	`is_read` tinyint NOT NULL DEFAULT 0,
-	`read_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`read_timestamp` timestamp,
 	PRIMARY KEY (`rid`, `uid`),
 	FOREIGN KEY (`uid`) REFERENCES `user` (`uid`) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (`rid`) REFERENCES `reply` (`rid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -167,7 +168,3 @@ CREATE TABLE `access` (
   PRIMARY KEY (`uid`,`access_timestamp`),
   FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
 )ENGINE=InnoDB;
-
-INSERT INTO USER (`firstname`, `lastname`, `user_pwd`, `state`, `city`, `zipcode`, `address`, `phone_num`, `photo`, `self_intro`, `family_intro`, `profile_timestamp`, `email`)
-VALUES ('Jia', 'Shi', 'psw', 'New York', 'Brooklyn', 11202,'111 Street', 9491118218,'jia.jpg', null, null, '2017-07-23 13:10:11', 'js11182@nyu.edu');
-
