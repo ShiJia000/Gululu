@@ -51,7 +51,7 @@ INSERT INTO block (`hid`, `bname`) VALUES
 
 -- If a person is aproved to be added in a block, is_approved will be 1. Otherwise, wil be 0.
 -- For the first person in a block, his/her is_approved defaults to 1 and approve_num defaults to 0.
-INSERT INTO join_block(`joinid`, `uid`, `bid`, `is_approved`, `approve_num`) VALUES 
+INSERT INTO join_block(`uid`, `bid`, `is_approved`, `approve_num`) VALUES 
 (1, 1, 1, 0),
 (2, 1, 1, 1),
 (3, 1, 1, 2),
