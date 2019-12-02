@@ -15,7 +15,7 @@ CREATE TABLE `user` (
   `city` varchar(45) NOT NULL,
   `zipcode` int(5) NOT NULL,
   `address` text NOT NULL,
-  `phone_num` int(10) NOT NULL,
+  `phone_num` int(11) NOT NULL,
   `photo` text NOT NULL,
   `self_intro` text NOT NULL,
   `family_intro` text NOT NULL,
@@ -167,4 +167,7 @@ CREATE TABLE `access` (
   PRIMARY KEY (`uid`,`access_timestamp`),
   FOREIGN KEY (`uid`) REFERENCES `user` (`uid`)
 )ENGINE=InnoDB;
+
+INSERT INTO USER (`firstname`, `lastname`, `user_pwd`, `state`, `city`, `zipcode`, `address`, `phone_num`, `photo`, `self_intro`, `family_intro`, `profile_timestamp`, `email`)
+VALUES ('Jia', 'Shi', 'psw', 'New York', 'Brooklyn', 11202,'111 Street', 9491118218,'jia.jpg', null, null, '2017-07-23 13:10:11', 'js11182@nyu.edu');
 
