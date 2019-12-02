@@ -17,8 +17,8 @@ CREATE TABLE `user` (
   `address` text NOT NULL,
   `phone_num` bigint NOT NULL,
   `photo` text NOT NULL,
-  `self_intro` text NOT NULL,
-  `family_intro` text NOT NULL,
+  `self_intro` text,
+  `family_intro` text,
   `profile_timestamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `email` text NOT NULL,
   PRIMARY KEY (`uid`)
