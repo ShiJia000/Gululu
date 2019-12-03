@@ -177,17 +177,14 @@ VALUES
 
 -- hood Message
 -- 6 to hood 先找到所有在这个hood的人, 找到user id 为 1, 2, 3, 4, 5, 6, 7的人
-SELECT uid 
-	FROM join_block jb, block b
-WHERE jb.bid = b.bid
-	AND b.hid = 1;
+SELECT uid FROM join_block jb, block b
+WHERE jb.bid = b.bid AND b.hid = 1;
 
 INSERT INTO message (`mid`, `title`, `subject`, `uid`, `text_body`, `lantitude`, `longitude` , `tid`)
 VALUES (5, "I want to sell my laptop.", "sell and buy", 6, "Hello, I'm Jack. I want to sell my labtop. It is brand new. If you want it. Please call me at 3777777777.", 41.40338, 2.17403, 5);
 
 INSERT INTO receive_msg (`mid`, `uid`, `is_read`)
-VALUES 
-    (5, 1, 0),
+VALUES (5, 1, 0),
     (5, 2, 0),
     (5, 3, 0),
     (5, 4, 0),
@@ -233,3 +230,16 @@ VALUES
     (6, 5, 0),
     (6, 6, 0),
     (6, 7, 0);
+
+-- other data
+INSERT INTO message (`mid`, `title`, `subject`, `uid`, `text_body`, `lantitude`, `longitude` , `tid`)
+VALUES (7, "My Second Message to neighbor", "say hello", 2, "Hello neighbor, I am Haochen.", 41.40338, 2.17403, 2);
+
+INSERT INTO receive_msg (`mid`, `uid`, `is_read`)
+VALUES 
+    (7, 2, 1),
+    (7, 3, 0);
+
+-- msg_setting
+INSERT INTO msg_setting (`uid`, `tid`)
+VALUES (1, 1),(1, 2),(1, 3),(1, 4),(1, 5);
