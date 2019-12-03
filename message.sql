@@ -218,3 +218,18 @@ VALUES
     (8, 5, 0),
     (8, 6, 0),
     (8, 7, 0);
+
+
+-- bicycle accident
+INSERT INTO message (`mid`, `title`, `subject`, `uid`, `text_body`, `lantitude`, `longitude` , `tid`)
+VALUES (6, "Bicycle accident", "accident", 1, "A bicycle accident happened in downtown brooklyn.", 41.40338, 2.17403, 5);
+
+INSERT INTO receive_msg (`mid`, `uid`, `is_read`)
+VALUES 
+    (6, 1, 1),
+    (6, 2, 0),
+    (6, 3, 0),
+    (6, 4, 0),
+    (6, 5, 0),
+    (6, 6, 0),
+    (6, 7, 0);
