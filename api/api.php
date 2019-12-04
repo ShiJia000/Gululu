@@ -29,14 +29,5 @@ abstract class api {
         return mysqli_connect(self::IP, self::USERNAME, self::PWD, self::DB);
     }
 
-    public function getJsonRes($data) {
-    	try {
-			$this->res['data'] = $data;
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-    }
+    abstract protected function doExecute();
 }
