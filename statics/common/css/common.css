@@ -1,0 +1,41 @@
+body {
+	background-color: #FFFFFF;
+}
+footer {
+	background-color: #040303;
+
+}
+footer a {
+	color: white;
+}
+.navbar-dark {
+	background-color: #0d2129;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #48bf84;
+    border-color: #48bf84;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #3aa771;
+    border-color: #379d6a;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #89d2ae;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(206, 243, 225);
+}
+
+.search-input {
+	width: 300px!important;
+}
+.left-side-nav, .right-side-nav {
+	background-color: #F4F8F5;
+	height: 1000px;
+}
+
