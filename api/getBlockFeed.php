@@ -1,6 +1,6 @@
 <?php
 /**
- * http://localhost/db_nextdoor/api/getBlockFeed?uid=2
+ * http://localhost/db_nextdoor/api/getBlockFeed?uid=1
  */
 require_once 'api.php';
 class getBlockFeed extends api {
@@ -8,31 +8,31 @@ class getBlockFeed extends api {
 		// in case of sql injection
 		$uid = intval($_GET['uid']);
 		$isUnRead = intval($_GET['unread']);
-		$getNeighborMsg = '';
+		$getBlockMsg = '';
 		if ($isUnRead === 1) {
 			// unread messages
-			$getNeighborMsg = 'SELECT u.firstname, u.lastname,u.photo, m.*
+			$getBlockMsg = 'SELECT u.firstname, u.lastname,u.photo, m.*
 			FROM receive_msg rm, message m, user u
 			WHERE rm.mid = m.mid
 			AND u.uid = m.uid 
 			AND is_read = 0 
-			AND m.tid = 2 
+			AND m.tid = 4
 			AND rm.uid = ' . $uid . ';'; 
 		} else {
 			// all messages from friends
-			$getNeighborMsg = 'SELECT u.firstname, u.lastname,u.photo, m.*
+			$getBlockMsg = 'SELECT u.firstname, u.lastname,u.photo, m.*
 			FROM receive_msg rm, message m, user u
 			WHERE rm.mid = m.mid 
 			AND u.uid = m.uid 
-			AND m.tid = 2 
+			AND m.tid = 4 
 			AND rm.uid = ' . $uid . ';'; 
 		}
-		$query = mysqli_query($this->conn, $getNeighborMsg);
+		$query = mysqli_query($this->conn, $getBlockMsg);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 		if ($data) {
 			return $data;
 		} else {
-			throw new Exception("No message about neighbor.");
+			throw new Exception("No message about block.");
 		}
 	}
 		public function getJson() {
@@ -46,6 +46,6 @@ class getBlockFeed extends api {
 		}
 	}
 }
-$neighborFeed = new getBlockFeed;
-$data = $neighborFeed->getJson();
+$blockFeed = new getBlockFeed;
+$data = $blockFeed->getJson();
 ?>
