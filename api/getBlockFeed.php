@@ -1,9 +1,9 @@
 <?php
 /**
- * http://localhost/db_nextdoor/api/getNeighborFeed?uid=2
+ * http://localhost/db_nextdoor/api/getBlockFeed?uid=2
  */
 require_once 'api.php';
-class getNeighborFeed extends api {
+class getBlockFeed extends api {
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_GET['uid']);
@@ -46,6 +46,6 @@ class getNeighborFeed extends api {
 		}
 	}
 }
-$neighborFeed = new getNeighborFeed;
+$neighborFeed = new getBlockFeed;
 $data = $neighborFeed->getJson();
 ?>
