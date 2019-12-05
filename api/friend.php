@@ -1,23 +1,14 @@
 <?php
 /**
- * http://localhost/db_nextdoor/api/getReplyMessage?uid=2
+ * http://localhost/db_nextdoor/api/friend?uid=2
  */
 require_once 'api.php';
-class getReplyMessage extends api {
+class friend extends api {
 	public function doExecute() {
 		// in case of sql injection
-		$mid=intval($_GET['mid']);
-		$replyMessage='';
+		pass
 
 
-		$replyMessage='SELECT u.firstname, u.lastname, u.photo, r.*
-						FROM reply r, user u
-						WHERE u.uid=r.uid
-						AND r.mid= ' .$mid . ';';
-
-		
-		$query = mysqli_query($this->conn, $replyMessage);
-		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 		if ($data) {
 			return $data;
@@ -37,6 +28,6 @@ class getReplyMessage extends api {
 		}
 	}
 }
-$Replys = new getReplyMessage;
-$data = $Replys->getJson();
+$friends = new friend;
+$data = $friends->getJson();
 ?>
