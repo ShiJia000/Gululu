@@ -1,8 +1,7 @@
 <?php
 /**
  * @author     (Jia Shi <js11182@nyu.edu>)
- * http://localhost/db_nextdoor/api/signUp
- * 
+ * sign up api
  */
 require_once 'api.php';
 class signUp extends api {
@@ -104,6 +103,6 @@ class signUp extends api {
 		}
 	}
 }
-$neighborFeed = new signUp;
-$data = $neighborFeed->getJson();
+$signUp = new signUp;
+$data = $signUp->getJson();
 ?>
