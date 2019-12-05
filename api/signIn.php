@@ -35,7 +35,7 @@ class signIn extends api {
 		}
 
 		if (count($data) === 1) {
-			return $data;
+			return $data[0];
 		} else {
 			throw new Exception("An error Occurred!");
 		}
