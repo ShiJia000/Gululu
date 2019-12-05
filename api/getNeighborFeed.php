@@ -35,7 +35,7 @@ class getNeighborFeed extends api {
 			throw new Exception("No message about neighbor.");
 		}
 	}
-		public function getJson() {
+	public function getJson() {
 		try {
 			$this->res['data'] = $this->doExecute();
 		} catch (Exception $e) {

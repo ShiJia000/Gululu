@@ -25,6 +25,15 @@ abstract class api {
         }
     }
 
+    /**
+     * [check in case of sql injection for string]
+     * @param  [type] $param [input parameter]
+     * @return [type]        [check result]
+     */
+    public function check($param) {
+        return mysqli_real_escape_string($this->conn, $param);
+    }
+
     protected static function getConn() {
         return mysqli_connect(self::IP, self::USERNAME, self::PWD, self::DB);
     }

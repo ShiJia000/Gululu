@@ -20,7 +20,7 @@ CREATE TABLE `user` (
   `self_intro` text,
   `family_intro` text,
   `profile_timestamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `email` text NOT NULL,
+  `email` varchar(50) NOT NULL UNIQUE,
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
