@@ -13,10 +13,11 @@ class getFriendFeed extends api {
 
 		if ($isUnRead === 1) {
 			// unread messages
-			$getFriendMsg = 'SELECT m.* FROM receive_msg rm, message m, user u WHERE rm.mid = m.mid AND u.uid = m.uid AND is_read = 0 AND (m.tid = 1 or m.tid = 3) AND rm.uid = ' . $uid . ';'; 
+			$getFriendMsg = 'SELECT u.firstname, u.lastname,u.photo, m.* FROM receive_msg rm, message m, user u WHERE rm.mid = m.mid AND u.uid = m.uid AND is_read = 0 AND (m.tid = 1 or m.tid = 3) AND rm.uid = ' . $uid . ';'; 
+
 		} else {
 			// all messages from friends
-			$getFriendMsg = 'SELECT m.* FROM receive_msg rm, message m, user u WHERE rm.mid = m.mid AND u.uid = m.uid AND (m.tid = 1 or m.tid = 3) AND rm.uid = ' . $uid . ';'; 
+			$getFriendMsg = 'SELECT u.firstname, u.lastname,u.photo, m.* FROM receive_msg rm, message m, user u WHERE rm.mid = m.mid AND u.uid = m.uid AND (m.tid = 1 or m.tid = 3) AND rm.uid = ' . $uid . ';'; 
 		}
 
 		$query = mysqli_query($this->conn, $getFriendMsg);
