@@ -10,6 +10,9 @@ class joinBlock extends api {
 		$this->uid = intval($_POST['uid']);
 		$this->bid = intval($_POST['bid']);
 
+		//check not NULL
+		$this->checkNotNull();
+
 		//check if the block is empty
 		$check_empty_block='SELECT count(*) as cn
 		FROM join_block
@@ -50,8 +53,21 @@ class joinBlock extends api {
 		}
 
 	}
+
+	/**
+	 * [checkNotNull description]
+	 * @return [type] [void]
+	 */
+	public function checkNotNull(){
+		if (!$this->uid) {
+			throw new Exception("uid cannot be NUll!");
+		}
+		if (!$this->bid){
+			throw new Exception("bid cannot be NULL!");
+		}
+	}
 	
-		public function getJson() {
+	public function getJson() {
 		try {
 			$this->res['data'] = $this->doExecute();
 		} catch (Exception $e) {
