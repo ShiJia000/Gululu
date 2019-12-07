@@ -14,39 +14,31 @@ class joinBlock extends api {
 		$this->checkNotNull();
 
 		//check if the block is empty
-		$check_empty_block='SELECT count(*) as cn
-		FROM join_block
-		WHERE is_approved<>-1
-		AND bid=' . $this->bid  . ';';
+		$check_empty_block = 'SELECT count(*) as cn FROM join_block WHERE is_approved<>-1 AND bid=' . $this->bid  . ';';
 
 		$query = $conn->query($check_empty_block);
 		$data_block = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-
 		//check if the user in the block or in other blocks
-		$check_user_in_block='SELECT count(*) as cn
-		FROM join_block
-		WHERE is_approved<>-1
-		AND uid=' . $this->uid  . ';';
+		$check_user_in_block = 'SELECT count(*) as cn FROM join_block WHERE is_approved<>-1 AND uid=' . $this->uid  . ';';
 
 		$query = $conn->query($check_user_in_block);
 		$data_user = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-
 		if ($data_block[0]["cn"] === "0" && !$data_user[0]["cn"]){
 			//empty block and new user
-			$j_block="INSERT INTO join_block (`uid`, `bid`, `is_approved`, `approve_num`)VALUES (".$this->uid.",".$this->bid.",1,0);";
+			$j_block = "INSERT INTO join_block (`uid`, `bid`, `is_approved`, `approve_num`)VALUES (".$this->uid.",".$this->bid.",1,0);";
 		}
 		else if ($data_block[0]["cn"] !== "0" && !$data_user[0]["cn"]){
 			//non-empty block but new user
-			$j_block="INSERT INTO join_block (`uid`, `bid`, `is_approved`, `approve_num`)VALUES (".$this->uid.",".$this->bid.",0,0);";
+			$j_block = "INSERT INTO join_block (`uid`, `bid`, `is_approved`, `approve_num`)VALUES (".$this->uid.",".$this->bid.",0,0);";
 		}
 		else{
 			throw new Exception("already exist the user!");
 		}
-
 		$data = $conn->query($j_block);
-		if ($data==1) {
+
+		if ($data == 1) {
 			return $data;
 		} else {
 			throw new Exception("error, cannot join the block!");
