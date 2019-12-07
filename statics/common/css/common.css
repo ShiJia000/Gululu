@@ -1,5 +1,6 @@
 body {
 	background-color: #FFFFFF;
+    color: #4A5057
 }
 footer {
 	background-color: #040303;
@@ -8,8 +9,41 @@ footer {
 footer a {
 	color: white;
 }
-.navbar-dark {
-	background-color: #0d2129;
+
+.pointer {
+    cursor: pointer;
+}
+.navbar-light, .bg-light {
+	background-color: #FFFFFF!important;
+}
+
+.navbar-collapse {
+    margin-left: 100px;
+}
+
+.side-bar {
+    margin-top: 20px;
+}
+.nav-item {
+    margin: 0 20px 0 20px;
+    cursor: pointer;
+}
+
+.side-item {
+    padding: 15px 15px 15px 30px;
+}
+
+.left-side-nav {
+    padding-right: 0px;
+}
+
+.card {
+    background: #FFFF;
+    border: 0px;
+}
+.card-header{
+    background: #FFFF;
+    border: 0px;
 }
 
 .btn-primary {
@@ -26,16 +60,19 @@ footer a {
 .form-control:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #89d2ae;
+    border-color: #EDF2EE;
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgb(206, 243, 225);
+    box-shadow: 0 0 0 0.2rem rgb(216, 236, 220);
 }
 
 .search-input {
 	width: 300px!important;
 }
-.left-side-nav, .right-side-nav {
+.right-side-nav {
 	background-color: #F4F8F5;
 	height: 1000px;
 }
 
+.modal-body {
+    padding: 20px 20px 0 20px;
+}
