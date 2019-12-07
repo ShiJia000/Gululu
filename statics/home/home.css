@@ -34,3 +34,7 @@
 .msg-body-row {
 	padding: 0 15px;
 }
+
+.hide {
+	display: none;
+}
