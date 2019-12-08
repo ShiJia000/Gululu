@@ -4,6 +4,9 @@
  */
 require_once 'api.php';
 class joinBlock extends api {
+
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		// in case of sql injection
 		$conn = $this->conn;
@@ -43,7 +46,6 @@ class joinBlock extends api {
 		} else {
 			throw new Exception("error, cannot join the block!");
 		}
-
 	}
 
 	/**
@@ -58,18 +60,18 @@ class joinBlock extends api {
 			throw new Exception("bid cannot be NULL!");
 		}
 	}
-	
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
-$joinblock = new joinBlock;
-$data = $joinblock->getJson();
+
+try {
+	$thisClass = new joinBlock;
+	$thisClass->res['data'] = $thisClass->doExecute();
+
+} catch (Exception $e) {
+	$thisClass->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$thisClass->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($thisClass->res);
+}
+
 ?>

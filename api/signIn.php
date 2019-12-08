@@ -58,23 +58,18 @@ class signIn extends api {
 			throw new Exception("Email cannot be null!");
 		}
 	}
-
-	/**
-	 * [getJson to json format]
-	 * @return [type] [description]
-	 */
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
 
-$thisClass = new signIn;
-$data = $thisClass->getJson();
+try {
+	$thisClass = new signIn;
+	$thisClass->res['data'] = $thisClass->doExecute();
+
+} catch (Exception $e) {
+	$thisClass->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$thisClass->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($thisClass->res);
+}
+
 ?>
