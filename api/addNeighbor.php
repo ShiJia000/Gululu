@@ -15,6 +15,8 @@ class addNeighbors extends api {
 		$this->neighbor_uid = intval($_POST['neighbor_uid']);
 		$this->is_valid = intval($_POST['is_valid']);
 
+		$this->checkNotNull();
+
 		//check duplicate relationship
 		$check_duplicate = 'SELECT * FROM neighbor WHERE uid = ' . $this->uid . ' AND neighbor_uid = ' . $this->neighbor_uid. ' AND is_valid = ' . $this->is_valid . ';';
 
@@ -84,6 +86,23 @@ class addNeighbors extends api {
 			throw new Exception("No neighbors.");
 		}
 	}
+
+	/**
+	 * [checkNotNull description]
+	 * @return [type] [void]
+	 */
+	public function checkNotNull(){
+		if (!$this->uid) {
+			throw new Exception("uid cannot be NULL!");
+		}
+		if (!$this->neighbor_uid){
+			throw new Exception("neighbor_uid cannot be NULL!");
+		}
+		if (!$this->is_valid){
+			throw new Exception("is_valid cannot be NULL!");
+		}
+	}
+
 }
 
 try {
