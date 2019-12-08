@@ -7,6 +7,8 @@
 require_once 'api.php';
 class signIn extends api {
 
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		$conn = $this->conn;
 
@@ -34,11 +36,14 @@ class signIn extends api {
 			throw new Exception("This password and the email do not match. Please try again.");
 		}
 
-		if (count($data) === 1) {
-			return $data[0];
-		} else {
+		if (count($data) !== 1) {
 			throw new Exception("An error Occurred!");
 		}
+
+		session_start();
+		$_SESSION[$data[0]['uid']] = true;
+
+		return $data[0];
 	}
 
 	/**
@@ -69,6 +74,7 @@ class signIn extends api {
 		}
 	}
 }
+
 $thisClass = new signIn;
 $data = $thisClass->getJson();
 ?>

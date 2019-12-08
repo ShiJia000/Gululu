@@ -18,17 +18,18 @@ class getTypes extends api {
 		}
 		return $data;
 	}
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
-$getTypes = new getTypes;
-$data = $getTypes->getJson();
+
+try {
+	$getTypes = new getTypes;
+	$getTypes->res['data'] = $getTypes->doExecute();
+
+} catch (Exception $e) {
+	$getTypes->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$getTypes->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($getTypes->res);
+}
+
 ?>

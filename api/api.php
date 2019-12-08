@@ -9,7 +9,12 @@ abstract class api {
 
 	const DB = 'nextdoor';
 
+    protected $bolCheckLogin = true;
+
     public function __construct() {
+        if ($this->bolCheckLogin) {
+            $this->checkLogin();
+        }
 
     	$this->res = array(
 			'status' => 0,
@@ -36,6 +41,17 @@ abstract class api {
 
     protected static function getConn() {
         return mysqli_connect(self::IP, self::USERNAME, self::PWD, self::DB);
+    }
+
+    protected function checkLogin() {
+        $uid = $_GET['uid'];
+        session_start();
+        if (isset($_SESSION[$uid]) && $_SESSION[$uid] === true) {
+            // echo "login success.";
+        } else {
+            $_SESSION[$uid] = false;
+            throw new Exception("You don't have the right to login", -2);
+        }
     }
 
     abstract protected function doExecute();
