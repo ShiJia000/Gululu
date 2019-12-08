@@ -11,42 +11,62 @@ class acceptFriend extends api {
 	public function doExecute() {
 		// in case of sql injection
 		$conn = $this->conn;
+		$conn->autocommit(false);
+
 		$this->uid = intval($_POST['uid']);
 		$this->friend_uid = intval($_POST['friend_uid']);
+		$this->is_valid = intval($_POST['is_valid']);
 
+		$this->checkNotNull();
 
-		//check duplicate relationship
-
+		//check is_valid value
+		if ($this->is_valid == 0){
+			throw new Exception("Error Processing Request", 1);
+		}
 		 
-		$check_friend = 'SELECT * FROM friend WHERE uid = ' . $this->uid . ' AND friend_uid = ' . $this->friend_uid. ' AND (is_valid = 1 or is_valid = -1);';
+		//check
+		$check_friend = 'SELECT * FROM friend WHERE uid = ' . $this->uid . ' AND friend_uid = ' . $this->friend_uid. ' AND is_valid <> ' . $this->is_valid . ';';
 		$query = $conn->query($check_friend);
 		$checkData = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		if (count($checkData) != 0){
-			throw new Exception("Error, Already sent a invitation!");
-		}
-
-		//check uid & friend not in the same hood
-		$check_hood = 'SELECT * FROM (SELECT hid FROM join_block j, block b WHERE j.uid=' . $this->uid . ' AND j.bid=b.bid AND is_approved = 1) as a, join_block j, block b WHERE j.uid=' . $this->friend_uid . ' AND j.bid=b.bid AND is_approved = 1 AND a.hid=b.hid';
-
-		$query = $conn->query($check_hood);
-		$checkData = mysqli_fetch_all($query, MYSQLI_ASSOC);
-
 		if (count($checkData) == 0){
-			throw new Exception("Error, Cannot add because not in the same hood!");
+			throw new Exception("Error");
 		}
 
-		//add friends
-		$friends = 'INSERT INTO friend (`uid`, `friend_uid`, `is_valid`) VALUES (' . $this->uid . ', ' . $this->friend_uid . ', 0);';
+		//add/cancel friends
+		$friends1 = 'UPDATE friend SET is_valid = ' . $this->is_valid . ' WHERE uid = ' . $this->uid . ' AND friend_uid = ' . $this->friend_uid . ';';
+		$friends2 = 'UPDATE friend SET is_valid = ' . $this->is_valid . ' WHERE friend_uid = ' . $this->uid . ' AND uid = ' . $this->friend_uid . ';';
 
-		$data = $conn->query($friends);
+		$conn->query($friends1);
+		$conn->query($friends2);
 
-		if ($data) {
-			return $data;
+
+		// transaction
+		if (!$conn->errno) {
+		    $conn->commit();
+		    return 'Success';
 		} else {
-			throw new Exception("No friends.");
+		    $conn->rollback();
+		    throw new Exception("An error Occurred!");
 		}
 	}
+
+	/**
+	 * [checkNotNull description]
+	 * @return [type] [void]
+	 */
+	public function checkNotNull(){
+		if (!$this->uid) {
+			throw new Exception("uid cannot be NULL!");
+		}
+		if (!$this->friend_uid){
+			throw new Exception("friend_uid cannot be NULL!");
+		}
+		if (!$this->is_valid){
+			throw new Exception("is_valid cannot be NULL!");
+		}
+	}
+
 }
 
 try {
