@@ -4,6 +4,9 @@
  */
 require_once 'api.php';
 class getBlockFeed extends api {
+
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_GET['uid']);
@@ -46,6 +49,17 @@ class getBlockFeed extends api {
 		}
 	}
 }
-$blockFeed = new getBlockFeed;
-$data = $blockFeed->getJson();
+
+try {
+	$blockFeed = new getBlockFeed;
+	$blockFeed->res['data'] = $blockFeed->doExecute();
+
+} catch (Exception $e) {
+	$blockFeed->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$blockFeed->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($blockFeed->res);
+}
+
 ?>

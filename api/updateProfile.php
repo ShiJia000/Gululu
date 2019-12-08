@@ -8,6 +8,8 @@ require_once 'api.php';
 
 class updateProfile extends api {
 
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		$conn = $this->conn;
 
@@ -35,23 +37,18 @@ class updateProfile extends api {
 			throw new Exception("An error Occurred!");
 		}
 	}
-
-
-	/**
-	 * [getJson to json format]
-	 * @return [type] [description]
-	 */
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
-$thisClass = new updateProfile;
-$data = $thisClass->getJson();
+
+try {
+	$thisClass = new updateProfile;
+	$thisClass->res['data'] = $thisClass->doExecute();
+
+} catch (Exception $e) {
+	$thisClass->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$thisClass->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($thisClass->res);
+}
+
 ?>

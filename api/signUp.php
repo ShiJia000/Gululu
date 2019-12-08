@@ -6,6 +6,8 @@
 require_once 'api.php';
 class signUp extends api {
 
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		$conn = $this->conn;
 
@@ -87,22 +89,18 @@ class signUp extends api {
 			throw new Exception("Email cannot be null!");
 		}
 	}
-
-	/**
-	 * [getJson to json format]
-	 * @return [type] [description]
-	 */
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
-$signUp = new signUp;
-$data = $signUp->getJson();
+
+try {
+	$signUp = new signUp;
+	$signUp->res['data'] = $signUp->doExecute();
+
+} catch (Exception $e) {
+	$signUp->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$signUp->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($signUp->res);
+}
+
 ?>

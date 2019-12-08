@@ -5,6 +5,9 @@
 
 require_once 'api.php';
 class updateBlock extends api {
+
+	protected $bolCheckLogin = false;
+
 	public function doExecute(){
 		$conn = $this->conn;
 		$conn->autocommit(false);
@@ -14,7 +17,6 @@ class updateBlock extends api {
 		$this->is_agree = intval($_POST['is_agree']);
 
 		$this->checkNotNull();
-
 
 		//check already added in the block
 		$check_added = 'SELECT * FROM join_block WHERE joinid = ' . $this->joinid . ' AND is_approved = 1;';
@@ -104,17 +106,6 @@ class updateBlock extends api {
 		}
 	}
 
-	public function getJson() {
-	try {
-		$this->res['data'] = $this->doExecute();
-	} catch (Exception $e) {
-		$this->res['status'] = -1;
-		$this->res['message'] = $e->getMessage();
-	} finally {
-		echo json_encode($this->res);
-	}
-}
-
 	/**
 	 * [checkNotNull description]
 	 * @return [type] [void]
@@ -130,10 +121,18 @@ class updateBlock extends api {
 			throw new Exception("is_agree cannot be NULL");
 		}
 	}
-
 }
 
+try {
+	$thisClass = new updateBlock;
+	$thisClass->res['data'] = $thisClass->doExecute();
 
-$updateblock = new updateBlock;
-$data = $updateblock->getJson();
+} catch (Exception $e) {
+	$thisClass->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$thisClass->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($thisClass->res);
+}
+
 ?>

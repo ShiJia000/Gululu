@@ -5,6 +5,9 @@
 require_once 'api.php';
 
 class getFriendFeed extends api {
+
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_GET['uid']);
@@ -29,19 +32,18 @@ class getFriendFeed extends api {
 			throw new Exception("No message about friends.");
 		}
 	}
-
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
 
-$friendFeed = new getFriendFeed;
-$data = $friendFeed->getJson();
+try {
+	$friendFeed = new getFriendFeed;
+	$friendFeed->res['data'] = $friendFeed->doExecute();
+
+} catch (Exception $e) {
+	$friendFeed->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$friendFeed->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($friendFeed->res);
+}
+
 ?>

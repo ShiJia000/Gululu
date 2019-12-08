@@ -6,8 +6,9 @@
 
 require_once'api.php';
 
-class sendMsgToOnePerson extends api
-{
+class sendMsgToOnePerson extends api{
+
+	protected $bolCheckLogin = false;
 	
 	public function doExecute() {
 		$conn = $this->conn;
@@ -79,21 +80,6 @@ class sendMsgToOnePerson extends api
 	}
 
 	/**
-	 * [getJson to json format]
-	 * @return [type] [description]
-	 */
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
-
-	/**
 	 * [checkNotNull description]
 	 * @return [type] [void]
 	 */
@@ -120,7 +106,16 @@ class sendMsgToOnePerson extends api
 	}
 }
 
-$sendMsgToOnePerson = new sendMsgToOnePerson;
-$data = $sendMsgToOnePerson->getJson();
+try {
+	$thisClass = new sendMsgToOnePerson;
+	$thisClass->res['data'] = $thisClass->doExecute();
+
+} catch (Exception $e) {
+	$thisClass->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$thisClass->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($thisClass->res);
+}
 
 ?>
