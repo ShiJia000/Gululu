@@ -41,7 +41,7 @@ class signIn extends api {
 		}
 
 		session_start();
-		$_SESSION[$data[0]['uid']] = true;
+		$_SESSION['uid'] = $data[0]['uid'];
 
 		return $data[0];
 	}

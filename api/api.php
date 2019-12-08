@@ -44,10 +44,10 @@ abstract class api {
     }
 
     protected function checkLogin() {
-        $uid = $_GET['uid'];
+        $uid = $_COOKIE['uid'];
         session_start();
-        if (isset($_SESSION[$uid]) && $_SESSION[$uid] === true) {
-            // echo "login success.";
+        if (isset($_SESSION['uid']) && intval($_SESSION['uid']) === intval($uid)) {
+
         } else {
             $_SESSION[$uid] = false;
             throw new Exception("You don't have the right to login", -2);

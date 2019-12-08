@@ -16,7 +16,7 @@ class sendMsgToOnePerson extends api{
 
 		$this->title = $this->check($_POST['title']);
 		$this->subject = $this->check($_POST['subject']);
-		$this->uid = intval($_POST['postUid']);
+		$this->uid = intval($_COOKIE['uid']);
 
 		$this->textBody = $this->check($_POST['textBody']);
 		$this->latitude = floatval($_POST['latitude']);
