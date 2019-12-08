@@ -4,6 +4,9 @@
  */
 require_once 'api.php';
 class getNeighborFeed extends api {
+
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_GET['uid']);
@@ -35,17 +38,19 @@ class getNeighborFeed extends api {
 			throw new Exception("No message about neighbor.");
 		}
 	}
-	public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
+
 }
-$neighborFeed = new getNeighborFeed;
-$data = $neighborFeed->getJson();
+
+try {
+	$neighborFeed = new getNeighborFeed;
+	$neighborFeed->res['data'] = $neighborFeed->doExecute();
+
+} catch (Exception $e) {
+	$neighborFeed->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$neighborFeed->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($neighborFeed->res);
+}
+
 ?>

@@ -4,6 +4,9 @@
  */
 require_once 'api.php';
 class getHoodFeed extends api {
+
+	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_GET['uid']);
@@ -35,17 +38,18 @@ class getHoodFeed extends api {
 			throw new Exception("No message about hood.");
 		}
 	}
-		public function getJson() {
-		try {
-			$this->res['data'] = $this->doExecute();
-		} catch (Exception $e) {
-			$this->res['status'] = -1;
-			$this->res['message'] = $e->getMessage();
-		} finally {
-			echo json_encode($this->res);
-		}
-	}
 }
-$hoodFeed = new getHoodFeed;
-$data = $hoodFeed->getJson();
+
+try {
+	$hoodFeed = new getHoodFeed;
+	$hoodFeed->res['data'] = $hoodFeed->doExecute();
+
+} catch (Exception $e) {
+	$hoodFeed->res['status'] = $e->getCode() ? $e->getCode() : -1;
+	$hoodFeed->res['message'] = $e->getMessage();
+
+} finally {
+	echo json_encode($hoodFeed->res);
+}
+
 ?>
