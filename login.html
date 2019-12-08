@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <met
+    a charset="UTF-8">
+    <title>Gululu</title>
+    <link rel="stylesheet" href="statics/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="statics/common/css/common.css">
+    <link rel="stylesheet" href="statics/login/login.css">
+    <script src="https://kit.fontawesome.com/de00f113db.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="logo-container">
+                    <span>Gululu</span>
+                </div>
+            </div>
+            <div class="col-3 signin">
+                <div class="signin-in">
+                    <h4>Sign in</h4>
+                    <form id="signInForm">
+                        <div class="form-group">
+                            <label for="inputEmail">Email address</label>
+                            <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPwd">Password</label>
+                            <input type="password" name="userPwd" class="form-control" id="inputPwd" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="signInBtn">Sign in</button>
+                        <div class="signup-tip"><a href="#">Sign up </a> or <a href="#">Forget password?</a></div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+
+    <script src="statics/common/js/jquery-3.4.1.min.js"></script>
+    <script src="statics/common/js/jquery.cookie.js"></script>
+    <script src="statics/common/js/popper.min.js" crossorigin="anonymous"></script>
+    <script src="statics/common/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <script src="statics/login/login.js"></script>
+</body>
+</html>

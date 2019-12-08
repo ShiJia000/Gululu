@@ -15,6 +15,7 @@ footer a {
 }
 .navbar-light, .bg-light {
 	background-color: #FFFFFF!important;
+    border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .navbar-collapse {
@@ -47,6 +48,7 @@ footer a {
 }
 
 .btn-primary {
+    font-size: 14px;
     color: #fff;
     background-color: #48bf84;
     border-color: #48bf84;

@@ -91,7 +91,7 @@
             <!-- center -->
             <div class="col-7">
                 <!-- send message -->
-                <button type="button" class="btn btn-send-msg" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-send-msg" data-toggle="modal" data-target="#msgModal">
                     <div class="row">
                         <div class="col-2">
                             <div class="avatar">
@@ -105,7 +105,7 @@
                     </div>
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="sendMsg" aria-hidden="true">
+                <div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="sendMsg" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -114,47 +114,48 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+                            <form id="sendMsgForm">
                             <div class="modal-body">
-                                <form>
                                     <div class="form-group row">
                                         <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputTitle" placeholder="Input the message title">
+                                            <input type="text" name="title" class="form-control" id="inputTitle" placeholder="Input the message title" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="inputSubject" class="col-sm-2 col-form-label">Subject</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputSubject" placeholder="Input the message subject">
+                                            <input type="text" name="subject" class="form-control" id="inputSubject" placeholder="Input the message subject" required>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="inputSelectType" class="col-sm-2 col-form-label">Type</label>
                                         <div class="col-sm-10">
-                                            <select class="custom-select" id="inputSelectType">
+                                            <select class="custom-select" name="tid" id="inputSelectType" required>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group row hide" id="receiverRow">
                                         <label for="inputReceiver" class="col-sm-2 col-form-label">Receiver</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputReceiver">
+                                            <input type="text" class="form-control" id="inputReceiver" name="receiveUid">
                                         </div>
                                     </div>
                                     <div class="form-group row msg-body-row">
                                         <label for="textMsg">Message</label>
-                                        <textarea class="form-control" id="textMsg" rows="4" placeholder="message body"></textarea>
+                                        <textarea class="form-control" name="textBody" id="textMsg" rows="4" placeholder="message body" required=""></textarea>
                                     </div>
                                     <div class="form-group row msg-body-row pointer">
                                         <i class="fas fa-map-marker-alt"></i>
                                         <p>&nbsp;&nbsp;Add your location</p>
                                     </div>
-                                </form>
+                                
                             </div>
                             <div class="modal-footer">
                                 <span class="pointer"><i class="fas fa-camera"></i>&nbsp;&nbsp; Add a photo</span>
-                                <button type="button" class="btn btn-primary">Post</button>
+                                <button type="button" class="btn btn-primary" id="sendMsgBtn">Post</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -201,6 +202,7 @@
     </footer>
 
     <script src="statics/common/js/jquery-3.4.1.min.js"></script>
+    <script src="statics/common/js/jquery.cookie.js"></script>
     <script src="statics/common/js/popper.min.js" crossorigin="anonymous"></script>
     <script src="statics/common/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="statics/home/home.js"></script>
