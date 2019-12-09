@@ -208,7 +208,7 @@
 
     <script id="msgTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
-        <div class="message-container" id="message-template">
+        <div class="message-container" data-mid="<%=data[i].mid%>">
             <div class="message-box">
                 <div class="msg-item msg-sender row">
                     <div class="col-1 avatar">
@@ -274,8 +274,8 @@
                         <img src="statics/common/img/test_avatar.png">
                     </div>
                     <div class="col-11 reply-input">
-                        <textarea class="form-control" name="textBody" id="textMsg" rows="2" placeholder="message body" required=""></textarea>
-                        <button class="btn btn-primary reply-btn float-right">Reply</button>
+                        <textarea class="form-control reply-text" name="textBody" rows="2" placeholder="message body" required=""></textarea>
+                        <button class="btn btn-primary reply-btn float-right send-reply">Reply</button>
                     </div>
                     <!-- <div class="col-1"></div> -->
                 </div>

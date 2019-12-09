@@ -36,7 +36,7 @@ class getBlockFeed extends api {
 		foreach ($data as $key => $value) {
 			$mid = $value['mid'];
 
-			$replyMessage = 'SELECT u.firstname, u.lastname, u.photo, r.* FROM receive_reply rr, reply r, user u, message m WHERE u.uid = r.uid AND m.mid = r.mid AND m.uid = rr.uid AND rr.rid = r.rid AND is_read = 0 AND r.mid = ' .$mid . ';';
+			$replyMessage = 'SELECT u.firstname, u.lastname, u.photo, r.* FROM receive_reply rr, reply r, user u WHERE rr.rid = r.rid AND r.uid = u.uid AND rr.uid= ' . $uid . ' AND r.mid = ' .$mid . ';';
 
 			$query = mysqli_query($this->conn, $replyMessage);
 			$replyData = mysqli_fetch_all($query, MYSQLI_ASSOC);

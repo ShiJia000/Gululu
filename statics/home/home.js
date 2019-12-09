@@ -11,7 +11,8 @@
 		getFriendFeed: 'api/getFriendFeed',
 		getBlockFeed: 'api/getBlockFeed',
 		getHoodFeed: 'api/getHoodFeed',
-		getNeighborFeed: 'api/getNeighborFeed'
+		getNeighborFeed: 'api/getNeighborFeed',
+		sendReply: 'api/sendReply'
 	};
 
 	var homepage = {
@@ -29,6 +30,7 @@
 			this.typeChange();
 			this.sendMsg();
 			this.chooseFeed();
+			this.sendReply();
 		},
 
 		initType: function () {
@@ -129,6 +131,43 @@
 					}
 				})
 				
+			});
+		},
+
+		sendReply: function () {
+			var me = this;
+			$('#msgTplContainer').delegate('.send-reply', 'click', function() {
+				var $this = $(this);
+				var $replyText = $this.parents('.reply-input').find('.reply-text');
+				var mid = $this.parents('.message-container').data('mid');
+				var content = $replyText.val();
+				var params = {
+					mid: mid,
+					content: content
+				}
+
+				$.ajax({
+					url: url.sendReply,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
+					success: function (res) {
+						if (res.status == 0) {
+							$replyText.val('');
+							$('#msgTplContainer').empty();
+							me.getFeed(url.getFriendFeed, 0);
+							me.getFeed(url.getNeighborFeed, 0);
+							me.getFeed(url.getBlockFeed, 0);
+							me.getFeed(url.getHoodFeed, 0);
+							alert(res.message);
+						} else {
+							alert(res.message);
+						}
+					},
+					error: function (e) {
+						alert('HTTP request error!');
+					}
+				});
 			});
 		},
 
