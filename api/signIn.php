@@ -28,7 +28,7 @@ class signIn extends api {
 		}
 
 		// check if the email & pwd match
-		$checkMatch = "SELECT user.* FROM user WHERE email = '" . $this->email . "' AND user_pwd = '" . $this->userPwd . "';";
+		$checkMatch = "SELECT uid, firstname, lastname, state, city, zipcode, address, phone_num, photo, self_intro, family_intro, profile_timestamp, email FROM user WHERE email = '" . $this->email . "' AND user_pwd = '" . $this->userPwd . "';";
 		$query = $conn->query($checkMatch);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
