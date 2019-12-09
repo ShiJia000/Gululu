@@ -9,7 +9,7 @@ class getNeighborFeed extends api {
 
 	public function doExecute() {
 		// in case of sql injection
-		$uid = intval($_GET['uid']);
+		$uid = intval($_COOKIE['uid']);
 		$isUnRead = intval($_GET['unread']);
 		$getNeighborMsg = '';
 		if ($isUnRead === 1) {
@@ -32,11 +32,17 @@ class getNeighborFeed extends api {
 		}
 		$query = mysqli_query($this->conn, $getNeighborMsg);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
-		if ($data) {
-			return $data;
-		} else {
-			throw new Exception("No message about neighbor.");
+		
+		foreach ($data as $key => $value) {
+			$mid = $value['mid'];
+
+			$replyMessage = 'SELECT u.firstname, u.lastname, u.photo, r.* FROM receive_reply rr, reply r, user u, message m WHERE u.uid = r.uid AND m.mid = r.mid AND m.uid = rr.uid AND rr.rid = r.rid AND is_read = 0 AND r.mid = ' .$mid . ';';
+
+			$query = mysqli_query($this->conn, $replyMessage);
+			$replyData = mysqli_fetch_all($query, MYSQLI_ASSOC);
+			$data[$key]['reply'] = $replyData;
 		}
+		return $data;
 	}
 
 }

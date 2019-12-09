@@ -7,18 +7,28 @@
 	var url = {
 		getTypes: 'api/getTypes',
 		sendMsgToOne: 'api/sendMsgToOnePerson',
-		sendMsgToAll: 'api/sendMsgToAll'
+		sendMsgToAll: 'api/sendMsgToAll',
+		getFriendFeed: 'api/getFriendFeed',
+		getBlockFeed: 'api/getBlockFeed',
+		getHoodFeed: 'api/getHoodFeed',
+		getNeighborFeed: 'api/getNeighborFeed'
 	};
 
 	var homepage = {
 		init: function () {
 			this.initType();
+			$('#msgTplContainer').empty();
+			this.getFeed(url.getFriendFeed, 0);
+			this.getFeed(url.getNeighborFeed, 0);
+			this.getFeed(url.getBlockFeed, 0);
+			this.getFeed(url.getHoodFeed, 0);
 			this.bind();
 		},
 
 		bind: function () {
 			this.typeChange();
 			this.sendMsg();
+			this.chooseFeed();
 		},
 
 		initType: function () {
@@ -49,6 +59,46 @@
 			});
 		},
 
+		initMsg: function (res) {
+			if (res.data.length > 0) {
+				var bt=baidu.template;
+				var html = bt('msgTpl', res);
+				$('#msgTplContainer').append(html);
+			}
+		},
+
+		getFeed: function (feedUrl, unread) {
+			var me = this;
+			var params = {};
+			params.unread = unread;
+
+			$.ajax({
+				url: feedUrl,
+				method: 'GET',
+				dataType: 'json',
+				data: params,
+				success: function(res) {
+					if (res.status == 0) {
+						me.initMsg(res);
+					} else {
+						alert(res.message);
+					}
+				},
+				error: function (e) {
+					alert('HTTP request error!');
+				}
+			});
+		},
+
+		chooseFeed: function() {
+			var me = this;
+			$('#collapseFeed').delegate('.side-item', 'click', function() {
+				var feedType = $(this).data('feed');
+				$('#msgTplContainer').empty();
+				me.getFeed(url[feedType], 0);
+			});
+		},
+
 		sendMsg: function () {
 			$('#sendMsgBtn').click(function() {
 				var tid = $('#inputSelectType').val();
@@ -57,7 +107,7 @@
 				if (tid == '1' || tid == '2') {
 					thisUrl = url.sendMsgToOne;
 				}
-				
+
 				var params = $('#sendMsgForm').serialize();
 
 				$.ajax({
@@ -95,6 +145,7 @@
 				}
 			});
 		}
+
 	};
 
 	$(function () {

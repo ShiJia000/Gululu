@@ -22,11 +22,11 @@ class getReplyMessage extends api {
 		$query = mysqli_query($this->conn, $replyMessage);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		if ($data) {
-			return $data;
-		} else {
-			throw new Exception("No reply message.");
-		}
+		// if ($data) {
+		return $data;
+		// } else {
+		// 	throw new Exception("No reply message.");
+		// }
 	}
 }
 

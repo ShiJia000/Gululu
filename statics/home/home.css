@@ -1,3 +1,6 @@
+body {
+	background: #F4F4F7;
+}
 .main-container {
 	margin-top: 15px;
 }
@@ -8,6 +11,7 @@
     width: 100%;
     height: 70px;
     padding: 15px;
+    background: #FFFFFF;
 }
 
 .avatar {
@@ -37,4 +41,65 @@
 
 .hide {
 	display: none;
+}
+
+.message-container {
+	margin: 10px 0 0 0;
+	border: 1px solid rgba(0,0,0,.125);
+    border-radius: 3px;
+    width: 100%;
+    padding: 15px;
+    background: #FFFFFF;
+}
+.message-container .msg-item {
+	margin-bottom: 15px;
+}
+.message-container .msg-sender {
+	height: 40px;
+	vertical-align: middle;
+}
+
+.sender-info {
+	line-height: 40px;
+}
+
+.message-container .msg-item.msg-time {
+	font-size: 13px;
+	color: rgb(103, 110, 122);
+}
+.message-container .msg-item.msg-buttons .btn {
+	color: #48bf84;
+	padding-left: 0;
+}
+
+.message-container .msg-item.msg-buttons .btn.focus, 
+.message-container .msg-item.msg-buttons .btn:focus {
+	box-shadow: none;
+}
+
+.reply-box .reply-content {
+	padding: 0 20px 0 0;
+}
+.reply-info {
+	padding: 0 15px;
+	border: 1px solid rgb(239, 241, 243);
+	border-radius: 5px;
+	background: #F9F9FA;
+}
+
+.sender-name {
+	color: #333333;
+}
+.reply-input {
+	padding: 0 20px 0 0;
+	/*text-align: right;*/
+}
+
+.reply-btn {
+	display: block;
+	margin-top: 10px;
+}
+
+.msg-buttons {
+	height: 40px;
 }

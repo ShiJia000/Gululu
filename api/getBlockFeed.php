@@ -9,12 +9,12 @@ class getBlockFeed extends api {
 
 	public function doExecute() {
 		// in case of sql injection
-		$uid = intval($_GET['uid']);
+		$uid = intval($_COOKIE['uid']);
 		$isUnRead = intval($_GET['unread']);
 		$getBlockMsg = '';
 		if ($isUnRead === 1) {
 			// unread messages
-			$getBlockMsg = 'SELECT u.firstname, u.lastname,u.photo, m.*
+			$getBlockMsg = 'SELECT u.firstname, u.lastname, u.photo, m.*
 			FROM receive_msg rm, message m, user u
 			WHERE rm.mid = m.mid
 			AND u.uid = m.uid 
@@ -25,18 +25,24 @@ class getBlockFeed extends api {
 			// all messages from friends
 			$getBlockMsg = 'SELECT u.firstname, u.lastname,u.photo, m.*
 			FROM receive_msg rm, message m, user u
-			WHERE rm.mid = m.mid 
+			WHERE rm.mid = m.mid
 			AND u.uid = m.uid 
 			AND m.tid = 4 
 			AND rm.uid = ' . $uid . ';'; 
 		}
 		$query = mysqli_query($this->conn, $getBlockMsg);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
-		if ($data) {
-			return $data;
-		} else {
-			throw new Exception("No message about block.");
+		
+		foreach ($data as $key => $value) {
+			$mid = $value['mid'];
+
+			$replyMessage = 'SELECT u.firstname, u.lastname, u.photo, r.* FROM receive_reply rr, reply r, user u, message m WHERE u.uid = r.uid AND m.mid = r.mid AND m.uid = rr.uid AND rr.rid = r.rid AND is_read = 0 AND r.mid = ' .$mid . ';';
+
+			$query = mysqli_query($this->conn, $replyMessage);
+			$replyData = mysqli_fetch_all($query, MYSQLI_ASSOC);
+			$data[$key]['reply'] = $replyData;
 		}
+		return $data;
 	}
 		public function getJson() {
 		try {
