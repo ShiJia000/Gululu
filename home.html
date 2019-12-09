@@ -19,9 +19,22 @@
                 <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
             <ul class="navbar-nav">
-                <li class="nav-item"><i class="fa fa-user fa-lg"></i></li>
                 <li class="nav-item"><i class="fa fa-bell fa-lg"></i></li>
                 <li class="nav-item"><i class="fa fa-envelope fa-lg"></i></li>
+                <div class="dropdown">
+                <li class="nav-item dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></li>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="user-dropdown">
+                    <button class="dropdown-item" type="button">
+                        <i class="far fa-address-card"></i>&nbsp;&nbsp; Profile
+                    </button>
+                    <button class="dropdown-item" type="button">
+                        <i class="fas fa-cog"></i>&nbsp;&nbsp; Settings
+                    </button>
+                    <button class="dropdown-item" type="button" id="signOut">
+                        <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Sign Out
+                    </button>
+                  </div>
+                </div>
             </ul>
         </div>
     </nav>

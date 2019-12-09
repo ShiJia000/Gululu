@@ -78,3 +78,13 @@ footer a {
 .modal-body {
     padding: 20px 20px 0 20px;
 }
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+#user-dropdown {
+    margin-top: 23px;
+    margin-left: -84px;
+    border-radius: 3px;
+}

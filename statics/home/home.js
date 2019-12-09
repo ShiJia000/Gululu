@@ -12,7 +12,8 @@
 		getBlockFeed: 'api/getBlockFeed',
 		getHoodFeed: 'api/getHoodFeed',
 		getNeighborFeed: 'api/getNeighborFeed',
-		sendReply: 'api/sendReply'
+		sendReply: 'api/sendReply',
+		signOut: 'api/signOut'
 	};
 
 	var homepage = {
@@ -31,6 +32,7 @@
 			this.sendMsg();
 			this.chooseFeed();
 			this.sendReply();
+			this.signOut();
 		},
 
 		initType: function () {
@@ -182,6 +184,28 @@
 					$receiverRow.addClass('hide');
 					$('#inputReceiver').removeAttr('required');
 				}
+			});
+		},
+
+		signOut: function () {
+			$('#signOut').click(function () {
+				$.ajax({
+					url: url.signOut,
+					method: 'POST',
+					dataType: 'json',
+					data: {},
+					success: function (res) {
+						if (res.status == 0) {
+							$.cookie('uid', null);
+							window.location.replace('login');
+						} else {
+							alert(res.message);
+						}
+					},
+					error: function (e) {
+						alert('HTTP request error!');
+					}
+				});
 			});
 		}
 
