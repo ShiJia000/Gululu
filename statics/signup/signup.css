@@ -1,0 +1,42 @@
+body{
+	background: #DCE3D1;
+    background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.signup {
+	margin-top: 80px;
+	height: 360px;
+	padding: 0;
+}
+.signup-in {
+	padding: 25px;
+	width: 150%;
+	height: 245%;
+	background:white;
+	border-radius: 3px;
+	box-shadow: 0 0 15px rgba(0,0,0,.5);
+}
+
+form {
+	margin-top: 30px;
+	font-color: #676E7A;
+	font-size: 14px;
+}
+
+.btn-primary {
+	width: 100%;
+	margin-top: 15px;
+}
+.signup-tip {
+	margin-top: 15px;
+}
+.logo-container {
+	margin-left: 180px;
+    margin-top: 200px;
+	color: white;
+	font-size: 100px;
+}
