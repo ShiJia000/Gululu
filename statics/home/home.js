@@ -13,7 +13,9 @@
 		getHoodFeed: 'api/getHoodFeed',
 		getNeighborFeed: 'api/getNeighborFeed',
 		sendReply: 'api/sendReply',
-		signOut: 'api/signOut'
+		signOut: 'api/signOut',
+		listFriends: 'api/getFriendInfo',
+		addFriend: 'api/addFriend',
 	};
 
 	var homepage = {
@@ -25,6 +27,7 @@
 			this.getFeed(url.getBlockFeed, 0);
 			this.getFeed(url.getHoodFeed, 0);
 			this.bind();
+			this.listFriends();
 		},
 
 		bind: function () {
@@ -193,7 +196,7 @@
 					url: url.signOut,
 					method: 'POST',
 					dataType: 'json',
-					data: {},
+
 					success: function (res) {
 						if (res.status == 0) {
 							$.cookie('uid', null);
@@ -206,6 +209,32 @@
 						alert('HTTP request error!');
 					}
 				});
+			});
+		},
+		
+		listFriends: function () {
+			$.ajax({
+				url: url.listFriends,
+				method: 'GET',
+				dataType: 'json',
+
+				success: function (res) {
+					if (res.status ==0){
+						if(res.data.length>0){
+
+							var bt=baidu.template;
+							var html = bt('friendTpl', res);
+							$('#aaa').append(html);
+						}
+
+
+					}else{
+						alert(res.message);
+					}
+				},
+				error: function (e) {
+					alert('HTTP request error!');
+				}
 			});
 		}
 

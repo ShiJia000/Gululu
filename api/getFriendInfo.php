@@ -9,8 +9,8 @@ class getFriendInfo extends api {
 
 	public function doExecute() {
 		// in case of sql injection
-		$uid = intval($_GET['uid']);
-
+		$uid = intval($_COOKIE['uid']);
+		
 		$friends = 'SELECT f.uid, f.friend_uid as friend_id, u.firstname, u.lastname, u.photo FROM friend f, user u WHERE u.uid=f.friend_uid AND f.uid=' . $uid . ';';
 
 		$query = mysqli_query($this->conn, $friends);
