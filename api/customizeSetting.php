@@ -12,6 +12,8 @@ class custSetting extends api{
 		$this->uid = intval($_POST['uid']);
 		$this->tid = intval($_POST['tid']);
 
+		$this->checkNotNull();
+
 
 		//check if exists the user
 		$check = "SELECT * FROM msg_setting WHERE uid = " . $this->uid . " AND tid = " . $this->tid . ";";
@@ -36,6 +38,20 @@ class custSetting extends api{
 			throw new Exception("An error Occurred!");
 		}
 	}
+
+	/**
+	 * [checkNotNull description]
+	 * @return [type] [void]
+	 */
+	public function checkNotNull() {
+		if (!$this->uid) {
+			throw new Exception("uid cannot be null!");
+		}
+		if (!$this->tid) {
+			throw new Exception("tid cannot be null!");
+		}
+	}
+
 }
 
 try {
