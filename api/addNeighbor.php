@@ -11,7 +11,9 @@ class addNeighbors extends api {
 	public function doExecute() {
 		// in case of sql injection
 		$conn = $this->conn;
-		$this->uid = intval($_POST['uid']);
+		// $this->uid = intval($_POST['uid']);
+
+		$this->uid = intval($_COOKIE['uid']);
 		$this->neighbor_uid = intval($_POST['neighbor_uid']);
 		$this->is_valid = intval($_POST['is_valid']);
 
