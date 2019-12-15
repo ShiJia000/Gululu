@@ -373,13 +373,39 @@
     </script>
 
     <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 40.690750, lng: -73.983820},
-          zoom: 8
-        });
-      }
+        var map, infoWindow;
+        function initMap() {
+            
+            infoWindow = new google.maps.InfoWindow;
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map = new google.maps.Map(document.getElementById('map'), {
+                      center: pos,
+                      zoom: 15
+                    });
+
+                    infoWindow.setPosition(pos);
+                    marker = new google.maps.Marker({
+                        position: pos,
+                        map: map
+                    });
+                    infoWindow.setContent('Your location');
+                    infoWindow.open(map, marker);
+                    map.setCenter(pos);
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYKmQLLzSPnRViDDC3iimnrOcQt9kruzs&callback=initMap"
     async defer></script>
