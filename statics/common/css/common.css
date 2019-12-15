@@ -88,3 +88,7 @@ footer a {
     margin-left: -84px;
     border-radius: 3px;
 }
+
+.hide {
+    display: none;
+}

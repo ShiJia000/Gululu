@@ -25,7 +25,7 @@
                 <div class="dropdown">
                 <li class="nav-item dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></li>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="user-dropdown">
-                    <button class="dropdown-item" type="button">
+                    <button class="dropdown-item" type="button" id="profileBtn">
                         <i class="far fa-address-card"></i>&nbsp;&nbsp; Profile
                     </button>
                     <button class="dropdown-item" type="button">
@@ -46,7 +46,7 @@
             <!-- left nav bar -->
             <div class="col left-side-nav">
                 <div class="side-bar" id="sidebar">
-                    <div class="card">
+                    <div class="card" id="homeNav">
                         <div class="card-header pointer" id="headingOne">
                             <p class="mb-0">
                                 <i class="fa fa-home fa-lg"></i>&nbsp;&nbsp;Home
@@ -114,7 +114,10 @@
             </div>
 
             <!-- center -->
-            <div id = "div1" class="col-7" style="display:block;">
+            <div class="col-7 center-box hide" id="profileBox">
+            </div>
+
+            <div class="col-7 center-box" id = "msgBox">
                 <!-- send message -->
                 <button type="button" class="btn btn-send-msg" data-toggle="modal" data-target="#msgModal">
                     <div class="row">
@@ -193,7 +196,7 @@
             </div>
 
             <!-- Add Friend -->
-            <div id = "div2" class="col-7" style="display:none;">
+            <div id = "div2" class="col-7 center-box" style="display:none;">
                 <div id="lstFriends">
                     <h3>Fridends</h3>
                 </div>
@@ -203,7 +206,7 @@
             </div>
 
             <!-- Add Neighbor -->
-            <div id = "div3" class="col-7" style="display:none;">
+            <div id = "div3" class="col-7 center-box" style="display:none;">
                 <div id="lstNeighbors">
                     <h3>Neighbors</h3>
                 </div>
@@ -224,7 +227,9 @@
 
             <!-- right -->
             <div class="col right-side-nav">
-                
+                <div class="map-container" id="map">
+                    <!-- <div id="map"></div> -->
+                </div>
             </div>
         </div>
     <!-- </div> -->
@@ -262,6 +267,8 @@
       </div>
     </footer>
 
+
+    <!-- msg template -->
     <script id="msgTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
         <div class="message-container" data-mid="<%=data[i].mid%>">
@@ -340,7 +347,42 @@
         </div>
         <%}%>
     </script>
+    <script id="profileTpl" type="text/html">
+        <div class="card profile-card" id="headProfile">
+            <h5 class="card-header"></h5>
+            <div class="profile-avatar">
+                <img src="statics/common/img/test_avatar.png">
+            </div>
+            <div class="card-body">
+                <h5><%=data.firstname%> <%=data.lastname%></h5>
+                <p><%=data.bname%></p>
+            </div>
+        </div>
+        <div class="card profile-card">
+            <h5 class="card-header">About me</h5>
+            <div class="card-body">
+                <p class="card-text"><%=data.self_intro%></p>
+            </div>
+        </div>
+        <div class="card profile-card">
+            <h5 class="card-header">About Family</h5>
+            <div class="card-body">
+                <p class="card-text"><%=data.family_intro%></p>
+            </div>
+        </div>
+    </script>
 
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 40.690750, lng: -73.983820},
+          zoom: 8
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYKmQLLzSPnRViDDC3iimnrOcQt9kruzs&callback=initMap"
+    async defer></script>
     <script id="friendTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
         <div class="message-container friend-container" data-fid="<%=data[i].friend_id%>">
@@ -435,10 +477,10 @@
 
     <script type="text/javascript">  
     function showAndHidden1(){  
-      var div1=document.getElementById("div1");  
+      var msgBox=document.getElementById("msgBox");  
       var div2=document.getElementById("div2");
-      if(div1.style.display=='block') div1.style.display='none';  
-      else div1.style.display='block';  
+      if(msgBox.style.display=='block') div1.style.display='none';  
+      else msgBox.style.display='block';  
       if(div2.style.display=='block') div2.style.display='none';  
       else div2.style.display='block';
     }  
@@ -446,14 +488,15 @@
     </script>
     <script type="text/javascript">  
     function showAndHidden2(){  
-      var div1=document.getElementById("div1");  
+      var msgBox=document.getElementById("msgBox");  
       var div3=document.getElementById("div3");
-      if(div1.style.display=='block') div1.style.display='none';  
-      else div1.style.display='block';  
+      if(msgBox.style.display=='block') msgBox.style.display='none';  
+      else msgBox.style.display='block';  
       if(div3.style.display=='block') div3.style.display='none';  
       else div3.style.display='block';
     }  
     </script>
+
 
     <script type="text/javascript">  
     function showAndHidden3(){  
@@ -469,8 +512,10 @@
     <script src="statics/common/js/jquery-3.4.1.min.js"></script>
     <script src="statics/common/js/jquery.cookie.js"></script>
     <script src="statics/common/js/popper.min.js" crossorigin="anonymous"></script>
+
     <script src="statics/common/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="statics/common/js/baiduTemplate.js"></script>
     <script src="statics/home/home.js"></script>
+    
 </body>
 </html>

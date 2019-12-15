@@ -23,7 +23,8 @@
 		availNeighbor: 'api/avaNeighbor',
 		listblock: 'api/getBlockInfo',
 		joinBlock: 'api/joinBlock',
-		leaveBlock: 'api/leaveBlock'
+		leaveBlock: 'api/leaveBlock',
+		getProfile: 'api/getProfile'
 
 	};
 
@@ -35,6 +36,7 @@
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
 			this.getFeed(url.getHoodFeed, 0);
+			this.initMapMarker();
 			this.bind();
 			this.listFriends();
 			this.cancelFriends();
@@ -54,6 +56,8 @@
 			this.sendMsg();
 			this.chooseFeed();
 			this.sendReply();
+			this.showProfile();
+			this.clickHome();
 			this.signOut();
 		},
 
@@ -121,6 +125,11 @@
 			$('#collapseFeed').delegate('.side-item', 'click', function() {
 				var feedType = $(this).data('feed');
 				$('#msgTplContainer').empty();
+
+				// show msgBox
+				$('.center-box').addClass('hide');
+				$('#msgBox').removeClass('hide');
+				
 				me.getFeed(url[feedType], 0);
 			});
 		},
@@ -230,6 +239,66 @@
 				});
 			});
 		},
+
+		initMapMarker: function () {
+			var markersArray = [];
+			var latLng = new google.maps.LatLng(40.690750, -73.983820);
+			// var tooltip = "some text";
+			var marker;
+			marker= new google.maps.Marker({
+	            position: latLng,
+	            map: map
+	            // title:tooltip
+	        });
+			marker= new google.maps.Marker({
+	            position: latLng,
+	            map: map,
+	            icon: {
+			      url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
+			    }
+	            // title:tooltip
+	        });
+			var infowindow = new google.maps.InfoWindow();
+			google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		        return function() {
+		          infowindow.setContent("hahahahahah");
+		          infowindow.open(map, marker);
+		        }
+		      })(marker));
+
+		},
+
+		showProfile: function () {
+			$('#profileBtn').click(function() {
+				$('.center-box').addClass('hide');
+				$('#profileBox').removeClass('hide');
+				$.ajax({
+					url:url.getProfile,
+					method: 'GET',
+					dataType: 'json',
+					success: function (res) {
+						var bt = baidu.template;
+						var html = bt('profileTpl', res);
+						$('#profileBox').append(html);
+					},
+					error: function () {
+						alert('HTTP request error!');
+					}
+				});
+			});
+		},
+
+		clickHome: function () {
+			var me = this;
+			$('#homeNav', '').click(function() {
+				$('.center-box').addClass('hide');
+				$('#msgBox').removeClass('hide');
+				me.getFeed(url.getFriendFeed, 0);
+				me.getFeed(url.getNeighborFeed, 0);
+				me.getFeed(url.getBlockFeed, 0);
+				me.getFeed(url.getHoodFeed, 0);
+			});
+		},
 		
 		listFriends: function () {
 			$.ajax({
@@ -241,14 +310,14 @@
 					if (res.status == 0){
 						if(res.data.length>0){
 
-							var bt=baidu.template;
+							var bt = baidu.template;
 							var html = bt('friendTpl', res);
 							$('#lstFriends').append(html);
 						}
 
 
 					}else{
-						alert(res.message);
+						// alert(res.message);
 					}
 				},
 				error: function (e) {
@@ -300,7 +369,7 @@
 							$('#Recommendation').append(html);
 						}
 					}else{
-						alert(res.message);
+						// alert(res.message);
 					}
 				},
 				error: function (e){
@@ -474,7 +543,7 @@
 							$('#Recommendation_n').append(html);
 						}
 					}else{
-						alert(res.message);
+						// alert(res.message);
 					}
 				},
 				error: function (e){
@@ -492,31 +561,27 @@
 					is_valid: 1
 				};
 
-			$.ajax({
-				url: url.addNeighbor,
-				method: 'POST',
-				dataType: 'json',
-				data: params,
+				$.ajax({
+					url: url.addNeighbor,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
 
-				success: function (res) {
-					if (res.status != 0){
-						alert(res.message);
+					success: function (res) {
+						if (res.status != 0){
+							alert(res.message);
+						}
+					},
+					error: function (e){
+						alert('HTTP request error!');
 					}
-				},
-				error: function (e){
-					alert('HTTP request error!');
-				}
-			})
-		});
+				});
+			});
 		}
-
 	};
 
 	$(function () {
 		homepage.init();
-	})
-})(window.jQuery);
-
-
-
+	});
+})(window.jQuery, window.google);
 
