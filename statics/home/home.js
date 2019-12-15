@@ -13,7 +13,16 @@
 		getHoodFeed: 'api/getHoodFeed',
 		getNeighborFeed: 'api/getNeighborFeed',
 		sendReply: 'api/sendReply',
-		signOut: 'api/signOut'
+		signOut: 'api/signOut',
+		listFriends: 'api/getFriendInfo',
+		addFriend: 'api/addFriend',
+		cancelFriend: 'api/acceptFriend',
+		availFriend: 'api/availableFriend',
+		listNeighbor: 'api/getNeighborInfo',
+		addNeighbor: 'api/addNeighbor',
+		availNeighbor: 'api/avaNeighbor',
+		getProfile: 'api/getProfile'
+
 	};
 
 	var homepage = {
@@ -26,6 +35,14 @@
 			this.getFeed(url.getHoodFeed, 0);
 			this.initMapMarker();
 			this.bind();
+			this.listFriends();
+			this.cancelFriends();
+			this.addFriends();
+			this.availableFriend();
+			this.listNeighbors();
+			this.cancelNeighbor();
+			this.availableNeighbor();
+			this.addNeighbor();
 		},
 
 		bind: function () {
@@ -33,6 +50,8 @@
 			this.sendMsg();
 			this.chooseFeed();
 			this.sendReply();
+			this.showProfile();
+			this.clickHome();
 			this.signOut();
 		},
 
@@ -100,6 +119,11 @@
 			$('#collapseFeed').delegate('.side-item', 'click', function() {
 				var feedType = $(this).data('feed');
 				$('#msgTplContainer').empty();
+
+				// show msgBox
+				$('.center-box').addClass('hide');
+				$('#msgBox').removeClass('hide');
+				
 				me.getFeed(url[feedType], 0);
 			});
 		},
@@ -194,7 +218,7 @@
 					url: url.signOut,
 					method: 'POST',
 					dataType: 'json',
-					data: {},
+
 					success: function (res) {
 						if (res.status == 0) {
 							$.cookie('uid', null);
@@ -239,12 +263,245 @@
 		},
 
 		showProfile: function () {
-			
-		}
+			$('#profileBtn').click(function() {
+				$('.center-box').addClass('hide');
+				$('#profileBox').removeClass('hide');
+				$.ajax({
+					url:url.getProfile,
+					method: 'GET',
+					dataType: 'json',
+					success: function (res) {
+						var bt = baidu.template;
+						var html = bt('profileTpl', res);
+						$('#profileBox').append(html);
+					},
+					error: function () {
+						alert('HTTP request error!');
+					}
+				});
+			});
+		},
 
+		clickHome: function () {
+			var me = this;
+			$('#homeNav', '').click(function() {
+				$('.center-box').addClass('hide');
+				$('#msgBox').removeClass('hide');
+				me.getFeed(url.getFriendFeed, 0);
+				me.getFeed(url.getNeighborFeed, 0);
+				me.getFeed(url.getBlockFeed, 0);
+				me.getFeed(url.getHoodFeed, 0);
+			});
+		},
+		
+		listFriends: function () {
+			$.ajax({
+				url: url.listFriends,
+				method: 'GET',
+				dataType: 'json',
+
+				success: function (res) {
+					if (res.status == 0){
+						if(res.data.length>0){
+
+							var bt = baidu.template;
+							var html = bt('friendTpl', res);
+							$('#lstFriends').append(html);
+						}
+
+
+					}else{
+						// alert(res.message);
+					}
+				},
+				error: function (e) {
+					alert('HTTP request error!');
+				}
+			});
+		},
+
+		cancelFriends: function(){
+			$('#lstFriends').delegate('.cancel-friend-btn', 'click', function () {
+				$this = $(this);
+				var params = {
+					is_valid: -1,
+					friend_uid: $this.parents('.friend-container').data('fid')
+				};
+
+				$.ajax({
+					url: url.cancelFriend,
+					method: 'POST',
+					dataType: 'json',
+					data:params,
+
+					success: function (res) {
+						if (res.status == 0){
+							pass;
+						}else{
+							alert(res.message);
+						}
+					},
+					error: function (e) {
+						alert('HTTP request error!');
+					}
+				})
+			});
+		},
+
+		availableFriend: function(){
+			$.ajax({
+				url: url.availFriend,
+				method: 'GET',
+				dataType: 'json',
+
+				success: function (res){
+					if (res.status == 0){
+						if(res.data.length>0){
+
+							var bt=baidu.template;
+							var html = bt('RecomTpl', res);
+							$('#Recommendation').append(html);
+						}
+					}else{
+						// alert(res.message);
+					}
+				},
+				error: function (e){
+					alert('HTTP request error!');
+				}
+
+			});
+		},
+
+		addFriends: function(){
+			$('#Recommendation').delegate('.add-friend-btn','click',function(){
+				$this = $(this);
+				var params = {
+					friend_uid: $this.parents('.friend-container').data('uid')
+				};
+
+				$.ajax({
+					url: url.addFriend,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
+
+					success: function (res){
+						if (res.status != 0){
+							alert(res.message);
+						}
+					},
+					error: function (e){
+						alert('HTTP request error!');
+					}
+				})
+			});
+		},
+
+		listNeighbors: function () {
+			$.ajax({
+				url: url.listNeighbor,
+				method: 'GET',
+				dataType: 'json',
+
+				success: function (res){
+					if (res.status == 0){
+						if(res.data.length>0){
+
+							var bt=baidu.template;
+							var html = bt('neighTpl', res);
+							$('#lstNeighbors').append(html);	
+
+						}else{
+							alert(res.message);
+						}}
+					},
+					error: function (e){
+						alert('HTTP request error!');
+					}
+			});
+		},
+
+		cancelNeighbor: function () {
+			$('#lstNeighbors').delegate('.cancel-neighbor-btn','click',function(){
+				$this = $(this);
+				var params = {
+					neighbor_uid: $this.parents('.neighbor-container').data('nid'),
+					is_valid: -1
+				};
+
+			$.ajax({
+				url: url.addNeighbor,
+				method: 'POST',
+				dataType: 'json',
+				data: params,
+
+				success: function (res) {
+					if (res.status != 0){
+						alert(res.message);
+					}
+				},
+				error: function (e){
+					alert('HTTP request error!');
+				}
+			})
+		});
+		},
+
+		availableNeighbor: function(){
+			$.ajax({
+				url: url.availNeighbor,
+				method: 'GET',
+				dataType: 'json',
+
+				success: function (res){
+					if (res.status == 0){
+						if(res.data.length>0){
+
+							var bt=baidu.template;
+							var html = bt('RecomTpl_n', res);
+							$('#Recommendation_n').append(html);
+						}
+					}else{
+						// alert(res.message);
+					}
+				},
+				error: function (e){
+					alert('HTTP request error!');
+				}
+
+			});
+		},
+
+		addNeighbor: function () {
+			$('#Recommendation_n').delegate('.add-neighbor-btn','click',function(){
+				$this = $(this);
+				var params = {
+					neighbor_uid: $this.parents('.neighbor-container').data('uid'),
+					is_valid: 1
+				};
+
+				$.ajax({
+					url: url.addNeighbor,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
+
+					success: function (res) {
+						if (res.status != 0){
+							alert(res.message);
+						}
+					},
+					error: function (e){
+						alert('HTTP request error!');
+					}
+				});
+			});
+		}
 	};
 
 	$(function () {
 		homepage.init();
 	});
 })(window.jQuery, window.google);
+

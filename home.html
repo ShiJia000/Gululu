@@ -25,7 +25,7 @@
                 <div class="dropdown">
                 <li class="nav-item dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></li>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="user-dropdown">
-                    <button class="dropdown-item" type="button">
+                    <button class="dropdown-item" type="button" id="profileBtn">
                         <i class="far fa-address-card"></i>&nbsp;&nbsp; Profile
                     </button>
                     <button class="dropdown-item" type="button">
@@ -46,7 +46,7 @@
             <!-- left nav bar -->
             <div class="col left-side-nav">
                 <div class="side-bar" id="sidebar">
-                    <div class="card">
+                    <div class="card" id="homeNav">
                         <div class="card-header pointer" id="headingOne">
                             <p class="mb-0">
                                 <i class="fa fa-home fa-lg"></i>&nbsp;&nbsp;Home
@@ -81,14 +81,22 @@
                     <div class="card">
                         <div class="card-header pointer" id="headingThree">
                             <p class="mb-0">
-                                <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Friend
+<!--                                 <i class="fas fa-users"></i>&nbsp;&nbsp;Add Friend
+ -->
+                                <button class="div-excahnge" type="button" style="border:none;" onclick="showAndHidden1();">
+                                    <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Friend
+                                </button>
                             </p>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header pointer" id="headingThree">
                             <p class="mb-0">
-                                <i class="fas fa-users"></i>&nbsp;&nbsp;Add Neighbor
+<!--                                 <i class="fas fa-users"></i>&nbsp;&nbsp;Add Neighbor
+ -->
+                                <button class="div-excahnge" type="button" style="border:none;" onclick="showAndHidden2();">
+                                    <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Neighbor
+                                </button>
                             </p>
                         </div>
                     </div>
@@ -103,31 +111,10 @@
             </div>
 
             <!-- center -->
-            <div class="col-7">
-                <div class="card profile-card" id="headProfile">
-                  <h5 class="card-header"></h5>
-                  <div class="profile-avatar">
-                      <img src="statics/common/img/test_avatar.png">
-                  </div>
-                  <div class="card-body">
-                        <h5>Jia Shi</h5>
-                        
-                  </div>
-                </div>
-                <div class="card profile-card">
-                  <h5 class="card-header">About me</h5>
-                  <div class="card-body">
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  </div>
-                </div>
-                <div class="card profile-card">
-                  <h5 class="card-header">About Family</h5>
-                  <div class="card-body">
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                  </div>
-                </div>
+            <div class="col-7 center-box hide" id="profileBox">
+            </div>
 
-                
+            <div class="col-7 center-box" id = "msgBox">
                 <!-- send message -->
                 <button type="button" class="btn btn-send-msg" data-toggle="modal" data-target="#msgModal">
                     <div class="row">
@@ -176,7 +163,7 @@
                                     <div class="form-group row hide" id="receiverRow">
                                         <label for="inputReceiver" class="col-sm-2 col-form-label">Receiver</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputReceiver" name="receiveUid">
+                                            <input type="text" class="form-control" id="inputReceiver" name="receive">
                                         </div>
                                     </div>
                                     <div class="form-group row msg-body-row">
@@ -200,9 +187,32 @@
 
                 <!-- message show -->
                 <div id="msgTplContainer">
+
                 </div>
                 
             </div>
+
+            <!-- Add Friend -->
+            <div id = "div2" class="col-7 center-box" style="display:none;">
+                <div id="lstFriends">
+                    <h3>Fridends</h3>
+                </div>
+                <div id="Recommendation">
+                    <h3>Recommendations</h3>
+                </div>
+            </div>
+
+            <!-- Add Neighbor -->
+            <div id = "div3" class="col-7 center-box" style="display:none;">
+                <div id="lstNeighbors">
+                    <h3>Neighbors</h3>
+                </div>
+                <div id="Recommendation_n">
+                    <h3>Recommendations</h3>  
+                </div>
+
+            </div>  
+
 
             <!-- right -->
             <div class="col right-side-nav">
@@ -326,6 +336,30 @@
         </div>
         <%}%>
     </script>
+    <script id="profileTpl" type="text/html">
+        <div class="card profile-card" id="headProfile">
+            <h5 class="card-header"></h5>
+            <div class="profile-avatar">
+                <img src="statics/common/img/test_avatar.png">
+            </div>
+            <div class="card-body">
+                <h5><%=data.firstname%> <%=data.lastname%></h5>
+                <p><%=data.bname%></p>
+            </div>
+        </div>
+        <div class="card profile-card">
+            <h5 class="card-header">About me</h5>
+            <div class="card-body">
+                <p class="card-text"><%=data.self_intro%></p>
+            </div>
+        </div>
+        <div class="card profile-card">
+            <h5 class="card-header">About Family</h5>
+            <div class="card-body">
+                <p class="card-text"><%=data.family_intro%></p>
+            </div>
+        </div>
+    </script>
 
     <script>
       var map;
@@ -338,6 +372,101 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBYKmQLLzSPnRViDDC3iimnrOcQt9kruzs&callback=initMap"
     async defer></script>
+    <script id="friendTpl" type="text/html">
+        <% for (var i = 0; i < data.length; i++) {%>
+        <div class="message-container friend-container" data-fid="<%=data[i].friend_id%>">
+            <div>
+                <p> Name: 
+                    <%=data[i].firstname%>
+                    <%=data[i].lastname%>
+                </p>
+            </div>
+            <div>
+                <p> Block:
+                    <%=data[i].bname%>
+                </p>
+            </div>
+            <div>
+                <button class="cancel-friend-btn">Cancel</button>
+            </div>
+        </div>
+        <%}%>
+    </script>
+
+    <script id="RecomTpl" type="text/htm">
+        <% for (var i = 0; i < data.length; i++) {%>
+        <div class="message-container friend-container" data-uid="<%=data[i].uid%>">
+            <div>
+                <p> Name: 
+                    <%=data[i].firstname%>
+                    <%=data[i].lastname%>
+                </p>
+            </div> 
+            <div>
+                <p> Block:
+                    <%=data[i].bname%>
+                </p>
+            </div>
+            <div>
+                <button class="add-friend-btn">Add</button>
+            </div>
+        </div>
+        <%}%>
+    </script>
+
+    <script id="neighTpl" type="text/htm">
+        <% for (var i = 0; i < data.length; i++) {%>
+        <div class="message-container neighbor-container" data-nid="<%=data[i].neighbor_id%>">
+            <div>
+                <p> Name: 
+                    <%=data[i].firstname%>
+                    <%=data[i].lastname%>
+                </p>
+            </div> 
+            <div>
+                <button class="cancel-neighbor-btn">Cancel</button>
+            </div>
+        </div>
+        <%}%>
+    </script>
+
+    <script id="RecomTpl_n" type="text/htm">
+        <% for (var i = 0; i < data.length; i++) {%>
+        <div class="message-container neighbor-container" data-uid="<%=data[i].uid%>">
+            <div>
+                <p> Name: 
+                    <%=data[i].firstname%>
+                    <%=data[i].lastname%>
+                </p>
+            </div> 
+            <div>
+                <button class="add-neighbor-btn">Add</button>
+            </div>
+        </div>
+        <%}%>
+    </script>
+
+    <script type="text/javascript">  
+    function showAndHidden1(){  
+      var msgBox=document.getElementById("msgBox");  
+      var div2=document.getElementById("div2");
+      if(msgBox.style.display=='block') div1.style.display='none';  
+      else msgBox.style.display='block';  
+      if(div2.style.display=='block') div2.style.display='none';  
+      else div2.style.display='block';
+    }  
+
+    </script>
+    <script type="text/javascript">  
+    function showAndHidden2(){  
+      var msgBox=document.getElementById("msgBox");  
+      var div3=document.getElementById("div3");
+      if(msgBox.style.display=='block') msgBox.style.display='none';  
+      else msgBox.style.display='block';  
+      if(div3.style.display=='block') div3.style.display='none';  
+      else div3.style.display='block';
+    }  
+    </script>
 
     <script src="statics/common/js/jquery-3.4.1.min.js"></script>
     <script src="statics/common/js/jquery.cookie.js"></script>

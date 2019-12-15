@@ -13,7 +13,7 @@ class acceptFriend extends api {
 		$conn = $this->conn;
 		$conn->autocommit(false);
 
-		$this->uid = intval($_POST['uid']);
+		$this->uid = intval($_COOKIE['uid']);
 		$this->friend_uid = intval($_POST['friend_uid']);
 		$this->is_valid = intval($_POST['is_valid']);
 

@@ -1,20 +1,24 @@
 <?php
 /**
- * http://localhost/db_nextdoor/api/getNeighborInfo?uid=2
+ * http://localhost/db_nextdoor/api/avaNeighbor?uid=2
  */
 require_once 'api.php';
-class getNeighborInfo extends api {
+class avaNeighbor extends api {
 
 	protected $bolCheckLogin = false;
 
 	public function doExecute() {
 		// in case of sql injection
 
+		// $uid = intval($_GET['uid']);
 		$uid = intval($_COOKIE['uid']);
+		
+		$sql = 'SELECT u.uid, u.firstname, u.lastname, jb.bid FROM user u, join_block jb,(SELECT uid, bid FROM join_block WHERE uid=' . $uid . ') as t WHERE u.uid = jb.uid AND jb.bid = t.bid AND is_approved=1 AND u.uid<>' . $uid . ' AND u.uid NOT IN (SELECT neighbor_uid FROM neighbor WHERE uid=' . $uid . ' AND is_valid=1);';
 
-		$neighbor = 'SELECT n.uid, n.neighbor_uid as neighbor_id, u.firstname, u.lastname, u.photo FROM neighbor n, user u WHERE u.uid=n.neighbor_uid AND n.is_valid=1 AND n.uid=' . $uid . ';';
 
-		$query = mysqli_query($this->conn, $neighbor);
+		// var_dump($sql);
+
+		$query = mysqli_query($this->conn, $sql);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 		if ($data) {
@@ -26,7 +30,7 @@ class getNeighborInfo extends api {
 }
 
 try {
-	$thisClass = new getNeighborInfo;
+	$thisClass = new avaNeighbor;
 	$thisClass->res['data'] = $thisClass->doExecute();
 
 } catch (Exception $e) {
