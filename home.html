@@ -294,7 +294,9 @@
                 <div class="msg-item msg-time">
                     <span><%=data[i].timestamp%></span>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span><i class="fas fa-map-marker-alt"></i>  <%=data[i].lantitude%>, <%=data[i].longitude%></span>
+                    <%if (data[i].address) {%>
+                    <span><i class="fas fa-map-marker-alt"></i> <%=data[i].address%></span>
+                    <%}%>
                 </div>
                 <div class="msg-item msg-buttons">
                     <button class="btn btn-no-border" id="writeReply">
