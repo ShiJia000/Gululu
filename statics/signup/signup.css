@@ -8,14 +8,12 @@ body{
     background-size: cover;
 }
 .signup {
-	margin-top: 80px;
+	margin-top: 40px;
 	height: 360px;
 	padding: 0;
 }
 .signup-in {
-	padding: 25px;
-	width: 150%;
-	height: 245%;
+	padding: 30px 30px 30px 30px;
 	background:white;
 	border-radius: 3px;
 	box-shadow: 0 0 15px rgba(0,0,0,.5);
@@ -32,7 +30,7 @@ form {
 	margin-top: 15px;
 }
 .signup-tip {
-	margin-top: 15px;
+	margin-top: -30px;
 }
 .logo-container {
 	margin-left: 180px;

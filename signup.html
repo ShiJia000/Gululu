@@ -12,41 +12,50 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-7">
-                <div class="logo-container">
-                    <span>Gululu</span>
-                </div>
-            </div>
-            <div class="col-3 signup">
+            <div class="col-2"></div>
+            <div class="col-8 signup">
                 <div class="signup-in">
-                    <h4>Sign Up</h4>
-                    <div class="signup-tip"><a href="http://localhost/db_nextdoor/login">Sign in </a></div>
+                    <h4>Gululu - Sign Up</h4>
+                    <div class="signup-tip float-right">
+                        <a href="http://localhost/db_nextdoor/login">Sign in </a>
+                    </div>
                     <form id="signUpForm">
                         <div class="form-group">
-                            <label for="fname">First name</label>
-                            <input type="text" name="firstname" class="form-control" id="fname" aria-describedby="int2" required>
+                            <label for="inputEmail">Email</label>
+                            <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" required>
                         </div>
-                        <div class="form-group">
-                            <label for="lname">Last name</label>
-                            <input type="text" name="lastname" class="form-control" id="lname" aria-describedby="int2" required>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="fname">First name</label>
+                                <input type="text" name="firstname" class="form-control" id="fname" aria-describedby="int2" required>
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lname">Last name</label>
+                                <input type="text" name="lastname" class="form-control" id="lname" aria-describedby="int2" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputState">State</label>
-                            <input type="text" name="state" class="form-control" id="inputState" required>
-                            <small>e.g. New York</small>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputState">State</label>
+                                <input type="text" name="state" class="form-control" id="inputState" required>
+                                <small>e.g. New York</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">City</label>
+                                <input type="text" name="city" class="form-control" id="inputCity" required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="inputCity">City</label>
-                            <input type="text" name="city" class="form-control" id="inputCity" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputAddress">Address</label>
-                            <input type="text" name="address" class="form-control" id="inputAddress" required>
-                            <small>e.g. Street or Apt. Number</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="zipcode">ZIP code</label>
-                            <input type="text" name="zipcode" pattern="[0-9]{5}" class="form-control" id="zipcode" required>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress">Address</label>
+                                <input type="text" name="address" class="form-control" id="inputAddress" required>
+                                <small>e.g. Street or Apt. Number</small>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="zipcode">ZIP code</label>
+                                <input type="text" name="zipcode" pattern="[0-9]{5}" class="form-control" id="zipcode" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone</label>
@@ -56,15 +65,12 @@
                             <label for="inputPwd">Password</label>
                             <input type="password" name="userPwd" class="form-control" id="inputPwd" required>
                         </div>
-                        <div class="form-group">
-                            <label for="inputEmail">Email</label>
-                            <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" required>
-                        </div>
+                        
                         <button type="submit" class="btn btn-primary" id="signUpBtn">Register Now</button>
                     </form>
                 </div>
             </div>
-            <div class="col-1"></div>
+            <div class="col-2"></div>
         </div>
     </div>
 

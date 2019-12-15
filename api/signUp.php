@@ -33,10 +33,21 @@ class signUp extends api {
 		if (count($data) !== 0) {
 			throw new Exception("Email exists! Please sign in or sign up with another email.");
 		}
+
+		// get lat and long from google api
+		$googleUrl = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBYKmQLLzSPnRViDDC3iimnrOcQt9kruzs";
+
+		$googleUrl .= "&address=" . urlencode($this->address);
+		
+		$googleApiRes = json_decode($this->curls($googleUrl), true);
+
+		$location = $googleApiRes['results'][0]['geometry']['location'];
+		$lat = $location['lat'];
+		$lng = $location['lng'];
 		
 		// insert data to user table
 		$sql = "INSERT INTO USER (`firstname`, `lastname`, `user_pwd`, `state`, `city`,
-				`zipcode`, `address`, `phone_num`, `email`) VALUES ( '" 
+				`zipcode`, `address`, `phone_num`, `email`, `latitude`, `longitude`) VALUES ( '" 
 	    	. $this->firstname . "', '" 
 	    	. $this->lastname . "', '"
 	    	. $this->userPwd . "', '"
@@ -45,7 +56,9 @@ class signUp extends api {
 	    	. $this->zipcode . ", '"
 	    	. $this->address . "', "
 	    	. $this->phoneNum . ", '"
-	    	. $this->email . "');";
+	    	. $this->email . "', "
+	    	. $lat . ", "
+	    	. $lng . ");";
 
 	    $data = $conn->query($sql);
 
@@ -89,6 +102,15 @@ class signUp extends api {
 			throw new Exception("Email cannot be null!");
 		}
 	}
+
+	private function curls($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        return $data;
+    }
 }
 
 try {
