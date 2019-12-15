@@ -25,8 +25,8 @@
 		joinBlock: 'api/joinBlock',
 		leaveBlock: 'api/leaveBlock',
 		getProfile: 'api/getProfile',
-		parseLoc: 'api/parseLocToAddr'
-
+		parseLoc: 'api/parseLocToAddr',
+		getUserInBlock: 'api/getUserInBlock'
 	};
 
 	var homepage = {
@@ -37,7 +37,7 @@
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
 			this.getFeed(url.getHoodFeed, 0);
-			this.initMapMarker();
+			this.initBlockMap();
 			this.bind();
 			this.listFriends();
 			this.cancelFriends();
@@ -148,6 +148,7 @@
 				success: function(res) {
 					if (res.status == 0) {
 						me.initMsg(res);
+						me.initMapMarker(res.data, 'pink', 'title');
 					} else {
 						alert(res.message);
 					}
@@ -156,6 +157,23 @@
 					alert('HTTP request error!');
 				}
 			});
+		},
+
+		initBlockMap: function () {
+			var me = this;
+			$.ajax({
+				url: url.getUserInBlock,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					if (res.status == 0) {
+						me.initMapMarker(res.data, 'blue', 'firstname');
+					}
+				},
+				error: function () {
+					alert('HTTP request error!');
+				}
+			})
 		},
 
 		chooseFeed: function() {
@@ -286,31 +304,27 @@
 			});
 		},
 
-		initMapMarker: function () {
-			var markersArray = [];
-			var latLng = new google.maps.LatLng(40.690750, -73.983820);
-			// var tooltip = "some text";
-			var marker;
-			marker= new google.maps.Marker({
-	            position: latLng,
-	            map: map
-	            // title:tooltip
-	        });
-			marker= new google.maps.Marker({
-	            position: latLng,
-	            map: map,
-	            icon: {
-			      url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
-			    }
-	            // title:tooltip
-	        });
+		initMapMarker: function (data, dotType, titleName) {
+
 			var infowindow = new google.maps.InfoWindow();
-			google.maps.event.addListener(marker, 'click', (function(marker, i) {
-		        return function() {
-		          infowindow.setContent("hahahahahah");
-		          infowindow.open(map, marker);
-		        }
-		      })(marker));
+
+			$.each(data, function(i , v) {
+				if (v.lantitude && v.longitude || v.latitude && v.longitude) {
+					marker= new google.maps.Marker({
+			            position: new google.maps.LatLng(v.lantitude ? v.lantitude : v.latitude, v.longitude),
+			            map: map,
+			            icon: {
+					      url: "http://maps.google.com/mapfiles/ms/icons/" + dotType + "-dot.png"
+					    }
+			        });
+			        google.maps.event.addListener(marker, 'click', (function(marker, v) {
+				        return function() {
+				          	infowindow.setContent(v[titleName]);
+				          	infowindow.open(map, marker);
+				        }
+				    })(marker, v));
+				}
+			});
 
 		},
 
