@@ -103,3 +103,43 @@ body {
 .msg-buttons {
 	height: 40px;
 }
+
+.profile-card {
+	border: 1px solid rgba(0,0,0,.125);
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.profile-card .card-header {
+	background: #FFFFFF;
+	border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+#headProfile .card-header {
+	height: 116px;
+	background-image: url(../common/img/profile_bg.JPG);
+	background-position: center center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#headProfile .profile-avatar {
+	width: 100px;
+	height: 100px;
+	margin-top: -50px;
+    margin-left: 20px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,.125);
+}
+#headProfile .profile-avatar img {
+	width: 100%;
+	height: 100%;
+}
+
+.map-container {
+	/*width: 100%;*/
+	height: 300px;
+	/*background-color: pink;*/
+}

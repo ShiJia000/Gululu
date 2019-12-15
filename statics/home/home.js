@@ -24,6 +24,7 @@
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
 			this.getFeed(url.getHoodFeed, 0);
+			this.initMapMarker();
 			this.bind();
 		},
 
@@ -207,11 +208,43 @@
 					}
 				});
 			});
+		},
+
+		initMapMarker: function () {
+			var markersArray = [];
+			var latLng = new google.maps.LatLng(40.690750, -73.983820);
+			// var tooltip = "some text";
+			var marker;
+			marker= new google.maps.Marker({
+	            position: latLng,
+	            map: map
+	            // title:tooltip
+	        });
+			marker= new google.maps.Marker({
+	            position: latLng,
+	            map: map,
+	            icon: {
+			      url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"
+			    }
+	            // title:tooltip
+	        });
+			var infowindow = new google.maps.InfoWindow();
+			google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		        return function() {
+		          infowindow.setContent("hahahahahah");
+		          infowindow.open(map, marker);
+		        }
+		      })(marker));
+
+		},
+
+		showProfile: function () {
+			
 		}
 
 	};
 
 	$(function () {
 		homepage.init();
-	})
-})(window.jQuery);
+	});
+})(window.jQuery, window.google);
