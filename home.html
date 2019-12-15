@@ -103,7 +103,10 @@
                     <div class="card">
                         <div class="card-header pointer" id="headingThree">
                             <p class="mb-0">
-                                <i class="fas fa-plus"></i>&nbsp;&nbsp;Join block
+ <!--                                <i class="fas fa-plus"></i>&nbsp;&nbsp;Join block -->
+                                <button class="div-excahnge" type="button" style="border:none;" onclick="showAndHidden3();">
+                                    <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Join block
+                                </button>
                             </p>
                         </div>
                     </div>
@@ -211,7 +214,15 @@
                     <h3>Recommendations</h3>  
                 </div>
 
-            </div>  
+            </div>
+
+            <!-- Join Block -->
+            <div id = "div4" class="col-7 center-box" style="display:none;">
+                <div id="lstBlock">
+                    <h3>Choose a block:</h3>
+                </div>
+            </div>
+
 
 
             <!-- right -->
@@ -446,6 +457,24 @@
         <%}%>
     </script>
 
+
+    <script id="blockTpl" type="text/htm">
+        <% for (var i = 0; i < data.length; i++) {%>
+            <div class="message-container">
+                    <p> <%=data[i].hname%></p>
+                    <div>
+                        <% for (var j = 0; j < data[i].blocks.length; j++){%>
+                            <div class="block-container" data-bid="<%=data[i].blocks[j].bid%>">
+                                <p><%=data[i].blocks[j].bname%></p>
+                                <button class="join-block-btn">Join</button>
+                                <button class="leave-block-btn">Leave</button>
+                            </div>
+                        <%}%>
+                    </div>
+            </div>
+        <%}%>
+    </script>
+
     <script type="text/javascript">  
     function showAndHidden1(){  
       var msgBox=document.getElementById("msgBox");  
@@ -465,6 +494,18 @@
       else msgBox.style.display='block';  
       if(div3.style.display=='block') div3.style.display='none';  
       else div3.style.display='block';
+    }  
+    </script>
+
+
+    <script type="text/javascript">  
+    function showAndHidden3(){  
+      var div1=document.getElementById("div1");  
+      var div4=document.getElementById("div4");
+      if(div1.style.display=='block') div1.style.display='none';  
+      else div1.style.display='block';  
+      if(div4.style.display=='block') div4.style.display='none';  
+      else div4.style.display='block';
     }  
     </script>
 
