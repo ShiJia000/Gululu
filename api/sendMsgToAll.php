@@ -19,8 +19,9 @@ class sendMsgToOnePerson extends api{
 		$this->uid = intval($_COOKIE['uid']);
 
 		$this->textBody = $this->check($_POST['textBody']);
-		$this->latitude = floatval($_POST['latitude']);
-		$this->longitude = floatval($_POST['longitude']);
+		$this->latitude = floatval($_POST['lat']);
+		$this->longitude = floatval($_POST['lng']);
+		$this->addr = $this->check($_POST['addr']);
 		$this->tid = intval($_POST['tid']);
 
 		// check not null
@@ -48,14 +49,15 @@ class sendMsgToOnePerson extends api{
 		}
 
 		// insert data into message
-		$msgSql = "INSERT INTO message (`title`, `subject`, `uid`, `text_body`, `lantitude`, `longitude` , `tid`) VALUES ('"
+		$msgSql = "INSERT INTO message (`title`, `subject`, `uid`, `text_body`, `lantitude`, `longitude` , `tid`, `address`) VALUES ('"
 			. $this->title . "', '"
 			. $this->subject . "', "
 			. $this->uid . ", '"
 			. $this->textBody . "', "
 			. $this->latitude . ", "
 			. $this->longitude . ", "
-			. $this->tid . ");";
+			. $this->tid . ", '"
+			. $this->addr . "');";
 
 		$conn->query($msgSql);
 		$mid = $conn->insert_id;

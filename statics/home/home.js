@@ -24,7 +24,8 @@
 		listblock: 'api/getBlockInfo',
 		joinBlock: 'api/joinBlock',
 		leaveBlock: 'api/leaveBlock',
-		getProfile: 'api/getProfile'
+		getProfile: 'api/getProfile',
+		parseLoc: 'api/parseLocToAddr'
 
 	};
 
@@ -58,6 +59,7 @@
 			this.sendReply();
 			this.showProfile();
 			this.clickHome();
+			this.addLocation();
 			this.signOut();
 		},
 
@@ -86,6 +88,42 @@
 					alert('HTTP request error!');
 				}
 
+			});
+		},
+
+		// the select dropdown menu of friends
+		initReceiver: function (typeId) {
+			var thisUrl = '';
+			var uidName = '';
+			if (typeId == '1') {
+				thisUrl = url.listFriends;
+				uidName = 'friend_id';
+			} else {
+				thisUrl = url.listNeighbor;
+				uidName = 'neighbor_id';
+			}
+
+			$.ajax({
+				url: thisUrl,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					if (res.status == 0) {
+						var $receiver = $('#inputReceiver');
+						var template = '<option selected>Choose the person</option>';
+							
+						$.each(res.data, function(i , v) {
+							template += '<option value="' + v[uidName] + '">' + v.firstname + ' ' + v.lastname + '</option>';
+						});
+
+						$receiver.empty().append(template);
+					} else {
+						alert(res.message);
+					}
+				},
+				error: function () {
+					alert('HTTP request error!');
+				}
 			});
 		},
 
@@ -144,6 +182,9 @@
 				}
 
 				var params = $('#sendMsgForm').serialize();
+				params += '&lat=' + $('.location').data('lat');
+				params += '&lng=' + $('.location').data('lng');
+				params += '&addr=' + $('.location').data('addr');
 
 				$.ajax({
 					url: thisUrl,
@@ -205,12 +246,17 @@
 		},
 
 		typeChange: function () {
+			var me = this;
 			$('#inputSelectType').change(function() {
 				var $receiverRow = $('#receiverRow');
 				var typeId = $(this).val();
 				if (typeId == '1' || typeId == '2') {
 					$receiverRow.removeClass('hide');
 					$('#inputReceiver').attr('required', true);
+					
+					// init receivers
+					me.initReceiver(typeId);
+					
 				} else {
 					$receiverRow.addClass('hide');
 					$('#inputReceiver').removeAttr('required');
@@ -299,6 +345,41 @@
 				me.getFeed(url.getHoodFeed, 0);
 			});
 		},
+
+		addLocation: function () {
+			$('#addLocation').click(function() {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var params = {
+	                    lat: position.coords.latitude,
+	                    lng: position.coords.longitude
+	                };
+
+	                $.ajax({
+	                	url: url.parseLoc,
+	                	method: 'GET',
+	                	dataType: 'json',
+	                	data: params,
+	                	success: function(res) {
+	                		if (res.status == 0) {
+	                			$location = $('#addLocation').find('.location');
+	                			$location.empty().append(res.data);
+	                			$location.data('lat', params.lat);
+	                			$location.data('lng', params.lng);
+	                			$location.data('addr', res.data);
+	                		} else {
+	                			alert('get location error!');
+	                		}
+	                	},
+	                	error: function () {
+	                		alert('HTTP request error!');
+
+	                	}
+	                })
+				});
+				
+
+			});
+		},
 		
 		listFriends: function () {
 			$.ajax({
@@ -309,13 +390,10 @@
 				success: function (res) {
 					if (res.status == 0){
 						if(res.data.length>0){
-
 							var bt = baidu.template;
 							var html = bt('friendTpl', res);
 							$('#lstFriends').append(html);
 						}
-
-
 					}else{
 						// alert(res.message);
 					}
