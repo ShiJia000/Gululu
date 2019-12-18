@@ -12,7 +12,7 @@ class updateBlock extends api {
 		$conn = $this->conn;
 		$conn->autocommit(false);
 
-		$this->uid = intval($_POST['uid']);
+		$this->uid = intval($_COOKIE['uid']);
 		$this->joinid = intval($_POST['joinid']);
 		$this->is_agree = intval($_POST['is_agree']);
 
