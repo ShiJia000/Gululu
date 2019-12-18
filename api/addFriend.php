@@ -6,14 +6,10 @@
 require_once 'api.php';
 class addFriends extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		// in case of sql injection
 		$conn = $this->conn;
 		$conn->autocommit(false);
-
-		// $this->uid = intval($_POST['uid']);
 		$this->uid = intval($_COOKIE['uid']);
 		$this->friend_uid = intval($_POST['friend_uid']);
 

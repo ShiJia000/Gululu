@@ -6,7 +6,7 @@
 
 require_once 'api.php';
 class neighborNotification extends api{
-	protected $bolCheckLogin = false;
+
 	public function doExecute(){
 		$uid = intval($_GET['uid']);
 

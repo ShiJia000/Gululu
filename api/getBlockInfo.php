@@ -5,18 +5,13 @@
 require_once 'api.php';
 class getBlockInfo extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		// in case of sql injection
 
 		$block = 'SELECT h.*, b.* FROM block b, hood h WHERE b.hid = h.hid order by h.hid;';
 
-
 		$query = mysqli_query($this->conn, $block);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
-
-		// var_dump($data);
 
 		$result = array();
 		// $blockArr = array();

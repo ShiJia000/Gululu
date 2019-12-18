@@ -6,8 +6,6 @@
 require_once 'api.php';
 class acceptFriend extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		// in case of sql injection
 		$conn = $this->conn;

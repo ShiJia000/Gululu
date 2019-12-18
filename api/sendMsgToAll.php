@@ -8,8 +8,6 @@ require_once'api.php';
 
 class sendMsgToOnePerson extends api{
 	
-	protected $bolCheckLogin = false;
-	
 	public function doExecute() {
 		$conn = $this->conn;
 		$conn->autocommit(false);
