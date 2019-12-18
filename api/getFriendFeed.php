@@ -24,8 +24,6 @@ class getFriendFeed extends api {
 		$query = mysqli_query($this->conn, $getFriendMsg);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		// var_dump($data[0]['mid']);
-
 		foreach ($data as $key => $value) {
 			$mid = $value['mid'];
 			$replyMessage = 'SELECT u.firstname, u.lastname, u.photo, r.* FROM receive_reply rr, reply r, user u WHERE rr.rid = r.rid AND r.uid = u.uid AND rr.uid= ' . $uid . ' AND r.mid = ' .$mid . ';';

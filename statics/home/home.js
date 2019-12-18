@@ -42,7 +42,7 @@
 			$('#msgTplContainer').empty();
 			this.initNoti();
 			this.initUnreadNum();
-			this.getFeed(url.getFriendFeed, 0, false, true);
+			this.getFeed(url.getFriendFeed, 0);
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
 			this.getFeed(url.getHoodFeed, 0);
@@ -188,9 +188,9 @@
 			var me = this;
 			var params = {};
 			params.unread = unread;
-			if (toRead) {
-				me.updateMsgToRead();
-			}
+			// if (toRead) {
+			// 	me.updateMsgToRead();
+			// }
 			
 
 			$.ajax({
@@ -204,7 +204,9 @@
 						me.initMsg(res, empty);
 						
 						me.initMapMarker(res.data, 'statics/common/img/christmas-envelop.png', 'title');
-
+						if (toRead) {
+							me.updateMsgToRead();
+						}
 					} else {
 						alert(res.message);
 					}
