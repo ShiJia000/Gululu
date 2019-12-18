@@ -7,7 +7,7 @@ require_once 'api.php';
 class signUp extends api {
 
 	protected $bolCheckLogin = false;
-	
+
 	public function doExecute() {
 		$conn = $this->conn;
 
@@ -61,6 +61,7 @@ class signUp extends api {
 	    	. $lng . ");";
 
 	    $data = $conn->query($sql);
+
 
 		if ($data == 1) {
 			return $data;
