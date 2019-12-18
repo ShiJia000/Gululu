@@ -433,7 +433,7 @@
 					success: function (res) {
 						var bt = baidu.template;
 						var html = bt('profileTpl', res);
-						$('#profileBox').append(html);
+						$('#profileBox').empty().append(html);
 					},
 					error: function () {
 						alert('HTTP request error!');
@@ -448,9 +448,9 @@
 				$('.center-box').addClass('hide');
 				$('#msgBox').removeClass('hide');
 				me.getFeed(url.getFriendFeed, 0, true);
-				me.getFeed(url.getNeighborFeed, 0, true);
-				me.getFeed(url.getBlockFeed, 0, true);
-				me.getFeed(url.getHoodFeed, 0, true);
+				me.getFeed(url.getNeighborFeed, 0, false);
+				me.getFeed(url.getBlockFeed, 0, false);
+				me.getFeed(url.getHoodFeed, 0, false);
 			});
 		},
 
