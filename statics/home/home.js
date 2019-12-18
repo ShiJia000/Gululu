@@ -47,10 +47,10 @@
 			this.listFriends();
 			this.addFriends();
 			this.availableFriend();
-			this.listNeighbors();
-			this.availableNeighbor();
+			// this.listNeighbors();
+			// this.availableNeighbor();
 			// haochen
-			this.listBlocks();
+			// this.listBlocks();
 			// 
 			// this.showBlock();
 			this.joinBlock();
@@ -372,10 +372,18 @@
 		},
 
 		showSide: function() {
+			var me = this;
 			$('#sidebar').delegate('.show-part', 'click', function () {
 				showId = $(this).data('id');
 				$('.center-box').addClass('hide');
 				$('#' + showId).removeClass('hide');
+
+				if (showId == 'joinBlockBox') {
+					me.listBlocks();
+				} else if (showId == 'addNeighborBox') {
+					me.listNeighbors();
+					me.availableNeighbor();
+				}
 			});
 		},
 
@@ -605,7 +613,7 @@
 						if(res.data.length>0){
 							var bt=baidu.template;
 							var html = bt('blockTpl', res);
-							$('#lstBlock').append(html);
+							$('#lstBlock').empty().append(html);
 
 							me.showBlock();
 						}else{
@@ -715,23 +723,19 @@
 
 				success: function (res){
 					if (res.status == 0){
-						if(res.data.length>0){
-
-							var bt=baidu.template;
-							var html = bt('neighTpl', res);
-							$('#lstNeighbors').append(html);	
-
-						}else{
-							alert(res.message);
-						}}
-					},
-					error: function (e){
-						alert('HTTP request error!');
+						var bt=baidu.template;
+						var html = bt('neighTpl', res);
+						$('#lstNeighbors').empty().append(html);
 					}
+				},
+				error: function (e){
+					alert('HTTP request error!');
+				}
 			});
 		},
 
 		addOrCancelNeighbor: function () {
+			var me = this;
 			// add neighbor in neighbor page
 			$('#Recommendation_n').delegate('.add-neighbor-btn','click',function(){
 				var $this = $(this);
@@ -777,7 +781,9 @@
 					if (res.status != 0){
 						alert(res.message);
 					} else {
-						me.initNoti;
+						me.initNoti();
+						me.listNeighbors();
+						me.availableNeighbor();
 					}
 				},
 				error: function (e){
@@ -820,14 +826,9 @@
 
 				success: function (res){
 					if (res.status == 0){
-						if(res.data.length>0){
-
-							var bt=baidu.template;
-							var html = bt('RecomTpl_n', res);
-							$('#Recommendation_n').append(html);
-						}
-					}else{
-						// alert(res.message);
+						var bt=baidu.template;
+						var html = bt('RecomTpl_n', res);
+						$('#Recommendation_n').empty().append(html);
 					}
 				},
 				error: function (e){

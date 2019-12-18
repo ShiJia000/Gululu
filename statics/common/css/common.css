@@ -96,3 +96,7 @@ h4 {
     margin-left: 10px;
     margin-top: 15px;
 }
+
+.no-margin-p {
+    margin-bottom: 0
+}

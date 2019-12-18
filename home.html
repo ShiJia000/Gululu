@@ -89,21 +89,21 @@
                     </div>
                 
                     <div class="card show-part" data-id="addFriendBox">
-                        <div class="card-header pointer" id="headingThree">
+                        <div class="card-header pointer">
                             <p class="mb-0">
                                 <i class="fas fa-user-plus div-excahnge"></i>&nbsp;&nbsp;Add Friend
                             </p>
                         </div>
                     </div>
                     <div class="card show-part"  data-id="addNeighborBox">
-                        <div class="card-header pointer" id="headingThree">
+                        <div class="card-header pointer">
                             <p class="mb-0">
                                 <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Neighbor
                             </p>
                         </div>
                     </div>
                     <div class="card show-part"  data-id="joinBlockBox">
-                        <div class="card-header pointer" id="headingThree">
+                        <div class="card-header pointer">
                             <p class="mb-0">
                                 <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Join block
                             </p>
@@ -208,11 +208,11 @@
 
             <!-- Add Neighbor -->
             <div class="col-7 center-box hide" id="addNeighborBox">
+                <h4>Your Neighbors</h4>
                 <div id="lstNeighbors">
-                    <h4>Your Neighbors</h4>
                 </div>
+                <h4>Recommendations</h4>  
                 <div id="Recommendation_n">
-                    <h4>Recommendations</h4>  
                 </div>
 
             </div>
@@ -487,14 +487,14 @@
 
     <script id="RecomTpl_n" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
-        <div class="message-container neighbor-container" data-uid="<%=data[i].uid%>">
-            <div>
-                <p> Name: 
+        <div class="message-container neighbor-container row" data-uid="<%=data[i].uid%>">
+            <div class="col-10">
+                <p class="no-margin-p"> Name: 
                     <%=data[i].firstname%>
                     <%=data[i].lastname%>
                 </p>
             </div> 
-            <div>
+            <div class="col-2">
                 <button class="btn btn-primary add-neighbor-btn">Add</button>
             </div>
         </div>

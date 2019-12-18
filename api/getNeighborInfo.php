@@ -17,11 +17,7 @@ class getNeighborInfo extends api {
 		$query = mysqli_query($this->conn, $neighbor);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		if ($data) {
-			return $data;
-		} else {
-			throw new Exception("No neighbors.");
-		}
+		return $data;
 	}
 }
 
