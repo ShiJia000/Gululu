@@ -15,9 +15,13 @@
         <a class="navbar-brand pointer" href="http://localhost/db_nextdoor/home">Gululu</a>
 
         <div class="collapse navbar-collapse">
-            <form class="form-inline mr-auto">
-                <input class="form-control my-2 mr-sm-2 search-input" type="search" placeholder="Search location / message" aria-label="Search">
-                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            <form class="form-inline mr-auto" id="searchForm">
+                <select class="form-control" id="searchSelect" name="searchType" required>
+                    <option value="msg">By Content</option>
+                    <option value="location">By Location</option>
+                </select>
+                <input class="form-control my-2 mr-sm-2 search-input" type="search" placeholder="Search location / message" aria-label="Search" name="searchText" required>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit" id="search">Search</button>
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item"><i class="fa fa-bell fa-lg"></i></li>

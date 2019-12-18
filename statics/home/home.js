@@ -26,7 +26,8 @@
 		leaveBlock: 'api/leaveBlock',
 		getProfile: 'api/getProfile',
 		parseLoc: 'api/parseLocToAddr',
-		getUserInBlock: 'api/getUserInBlock'
+		getUserInBlock: 'api/getUserInBlock',
+		search: 'api/searchKeywords',
 	};
 
 	var homepage = {
@@ -61,6 +62,7 @@
 			this.clickHome();
 			this.addLocation();
 			this.signOut();
+			this.search();
 		},
 
 		initType: function () {
@@ -301,6 +303,32 @@
 						alert('HTTP request error!');
 					}
 				});
+			});
+		},
+
+		search: function () {
+			var me = this;
+			$('#search').click(function(e) {
+				e.preventDefault();
+				
+				var params = $('#searchForm').serialize();
+				$.ajax({
+					url: url.search,
+					method: 'GET',
+					dataType: 'json',
+					data: params,
+					success: function (res) {
+						if (res.status == 0) {
+							me.initMsg(res);
+						} else {
+							alert(res.message);
+						}
+					},
+					error: function () {
+						alert('HTTP request error!');
+					}
+				});
+
 			});
 		},
 
