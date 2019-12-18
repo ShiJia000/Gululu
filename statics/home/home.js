@@ -33,7 +33,8 @@
 		accOrDenyJoinBlock: 'api/updateBlock',
 		updateProfile: 'api/updateProfile',
 		unreadNum: 'api/numMessage',
-		updateMsgToRead: 'api/msgToRead'
+		updateMsgToRead: 'api/msgToRead',
+		uploadAvatar: 'api/uploadAvatar'
 	};
 
 	var homepage = {
@@ -70,6 +71,7 @@
 			this.accOrDenyJoinBlock();
 			this.editIntro();
 			this.showUnreadMsg();
+			this.uploadAvatar();
 		},
 
 		initType: function () {
@@ -927,6 +929,29 @@
 						alert('HTTP request error!');
 					}
 				});
+			});
+		},
+
+		uploadAvatar: function () {
+			var me = this;
+
+			$('#profileBox').delegate('#uploadAvatar', 'change', function() {
+				formdata = new FormData();
+				$this = $(this);
+				if ($this.prop('files').length > 0) {
+			        file = $this.prop('files')[0];
+			        formdata.append("avatar", file);
+			    }
+			    $.ajax({
+			    	url: url.uploadAvatar,
+			    	type: 'POST',
+			    	data: formdata,
+			    	processData: false,
+    				contentType: false,
+    				success: function() {
+    					me.initProfile();
+    				}
+			    });
 			});
 		}
 	};

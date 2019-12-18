@@ -123,7 +123,7 @@
                 <button type="button" class="btn btn-send-msg" data-toggle="modal" data-target="#msgModal">
                     <div class="row">
                         <div class="col-2">
-                            <div class="avatar">
+                            <div class="avatar my-avatar">
                                 <img src="statics/common/img/test_avatar.png">
                             </div>
                         </div>
@@ -285,7 +285,11 @@
             <div class="message-box">
                 <div class="msg-item msg-sender row">
                     <div class="col-1 avatar">
-                        <img src="statics/common/img/test_avatar.png">
+                        <%if (data[i].photo != null && data[i].photo != "")%>
+                            <img src="upload/<%=data[i].photo%>">
+                        <%} else {%>
+                            <img src="statics/common/img/test_avatar.png">
+                        <%} %>
                     </div>
                     <div class="col-11 sender-info">
                         <span class="sender-name"><%=data[i].firstname%> <%=data[i].lastname%></span>
@@ -323,7 +327,11 @@
                 <% for (var j = 0; j < data[i].reply.length; j++) {%>
                 <div class="msg-item other-reply row">
                     <div class="col-1 avatar">
-                        <img src="statics/common/img/test_avatar.png">
+                        <%if (data[i].reply[j].photo != null && data[i].reply[j].photo != "")%>
+                            <img src="upload/<%=data[i].reply[j].photo%>">
+                        <%} else {%>
+                            <img src="statics/common/img/test_avatar.png">
+                        <%} %>
                     </div>
                     <div class="col-11 reply-content">
                         <div class="reply-info">
@@ -345,7 +353,7 @@
                 <%}%>
 
                 <div class="msg-item your-reply row">
-                    <div class="col-1 avatar">
+                    <div class="col-1 avatar my-avatar">
                         <img src="statics/common/img/test_avatar.png">
                     </div>
                     <div class="col-11 reply-input">
@@ -362,9 +370,12 @@
     <script id="profileTpl" type="text/html">
         <div class="card profile-card" id="headProfile">
             <h5 class="card-header"></h5>
-            <div class="profile-avatar">
-                <img src="statics/common/img/test_avatar.png">
+            <div class="profile-avatar pointer">
+                <img src="uploads/<%=data.photo%>">
             </div>
+            <!-- <div class="custom-file"> -->
+                <input type="file" class="custom-file-input pointer" accept="image/*" id="uploadAvatar">
+            <!-- </div> -->
             <div class="card-body">
                 <h5><%=data.firstname%> <%=data.lastname%></h5>
                 <p><%=data.bname%></p>
@@ -409,7 +420,7 @@
                     };
                     map = new google.maps.Map(document.getElementById('map'), {
                       center: pos,
-                      zoom: 15
+                      zoom: 11
                     });
 
                     infoWindow.setPosition(pos);
@@ -558,7 +569,11 @@
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
-                                <img src="statics/common/img/test_avatar.png">
+                                <%if (friendNoti[i].photo != null && friendNoti[i].photo != "")%>
+                                    <img src="upload/<%=friendNoti[i].photo%>">
+                                <%} else {%>
+                                    <img src="statics/common/img/test_avatar.png">
+                                <%} %>
                             </div>
                             <div class="col-8 sender-info">
                                 <span class="sender-name"><%=friendNoti[i].firstname%> <%=friendNoti[i].lastname%> want to add you as his / her friend.</span>
@@ -585,7 +600,11 @@
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
-                                <img src="statics/common/img/test_avatar.png">
+                                <%if (neighborNoti[i].photo != null && neighborNoti[i].photo != "")%>
+                                    <img src="upload/<%=neighborNoti[i].photo%>">
+                                <%} else {%>
+                                    <img src="statics/common/img/test_avatar.png">
+                                <%} %>
                             </div>
                             <div class="col-8 sender-info">
                                 <span class="sender-name"><%=neighborNoti[i].firstname%> <%=neighborNoti[i].lastname%> want to add you as his / her neighbor.</span>
@@ -607,7 +626,11 @@
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
-                                <img src="statics/common/img/test_avatar.png">
+                                <%if (joinBlockNoti[i].photo != null && joinBlockNoti[i].photo != "")%>
+                                    <img src="upload/<%=joinBlockNoti[i].photo%>">
+                                <%} else {%>
+                                    <img src="statics/common/img/test_avatar.png">
+                                <%} %>
                             </div>
                             <div class="col-8 sender-info">
                                 <span class="sender-name"><%=joinBlockNoti[i].firstname%> <%=joinBlockNoti[i].lastname%> want to join your block.</span>

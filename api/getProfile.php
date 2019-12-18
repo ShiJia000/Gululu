@@ -18,7 +18,7 @@ class getProfile extends api {
 
 
 		// get block info 
-		$sql = "SELECT u.uid, u.firstname, u.lastname, u.self_intro, u.family_intro, b.bname FROM join_block jb, user u, block b WHERE jb.uid = u.uid AND jb.bid = b.bid AND is_approved = 1 AND u.uid = " . $this->uid .";";
+		$sql = "SELECT u.uid, u.firstname, u.lastname, u.self_intro, u.family_intro, b.bname, u.photo FROM join_block jb, user u, block b WHERE jb.uid = u.uid AND jb.bid = b.bid AND is_approved = 1 AND u.uid = " . $this->uid .";";
 		$query = $conn->query($sql);
 
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);

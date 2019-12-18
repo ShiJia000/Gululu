@@ -213,3 +213,14 @@ span.noti-num {
 .edit-intro {
 	color: #48bf84!important;
 }
+
+#uploadAvatar {
+	width: 98px;
+    height: 98px;
+    margin-top: -98px;
+    margin-left: 20px;
+}
+
+.pointer {
+    cursor: pointer!important;
+}
