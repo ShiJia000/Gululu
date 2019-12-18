@@ -32,7 +32,8 @@
 		getNoti: 'api/getNotification',
 		accOrDenyJoinBlock: 'api/updateBlock',
 		updateProfile: 'api/updateProfile',
-		unreadNum: 'api/numMessage'
+		unreadNum: 'api/numMessage',
+		updateMsgToRead: 'api/msgToRead'
 	};
 
 	var homepage = {
@@ -41,7 +42,7 @@
 			$('#msgTplContainer').empty();
 			this.initNoti();
 			this.initUnreadNum();
-			this.getFeed(url.getFriendFeed, 0);
+			this.getFeed(url.getFriendFeed, 0, false, true);
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
 			this.getFeed(url.getHoodFeed, 0);
@@ -68,6 +69,7 @@
 			this.addOrCancelNeighbor();
 			this.accOrDenyJoinBlock();
 			this.editIntro();
+			this.showUnreadMsg();
 		},
 
 		initType: function () {
@@ -186,10 +188,14 @@
 			});
 		},
 
-		getFeed: function (feedUrl, unread, empty=false) {
+		getFeed: function (feedUrl, unread, empty=false, toRead=false) {
 			var me = this;
 			var params = {};
 			params.unread = unread;
+			if (toRead) {
+				me.updateMsgToRead();
+			}
+			
 
 			$.ajax({
 				url: feedUrl,
@@ -198,12 +204,28 @@
 				data: params,
 				success: function(res) {
 					if (res.status == 0) {
+
 						me.initMsg(res, empty);
 						
 						me.initMapMarker(res.data, 'pink', 'title');
+
 					} else {
 						alert(res.message);
 					}
+				},
+				error: function (e) {
+					alert('HTTP request error!');
+				}
+			});
+		},
+
+		updateMsgToRead: function () {
+			$.ajax({
+				url: url.updateMsgToRead,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+
 				},
 				error: function (e) {
 					alert('HTTP request error!');
@@ -238,7 +260,7 @@
 				$('.center-box').addClass('hide');
 				$('#msgBox').removeClass('hide');
 				
-				me.getFeed(url[feedType], 0);
+				me.getFeed(url[feedType], 0, false, true);
 			});
 		},
 
@@ -299,7 +321,7 @@
 						if (res.status == 0) {
 							$replyText.val('');
 							$('#msgTplContainer').empty();
-							me.getFeed(url.getFriendFeed, 0);
+							me.getFeed(url.getFriendFeed, 0, false, true);
 							me.getFeed(url.getNeighborFeed, 0);
 							me.getFeed(url.getBlockFeed, 0);
 							me.getFeed(url.getHoodFeed, 0);
@@ -410,9 +432,22 @@
 			});
 		},
 
+		showUnreadMsg: function () {
+			var me = this;
+			$('#showUnreadMsg').click(function() {
+				$('.center-box').addClass('hide');
+				$('#msgBox').removeClass('hide');
+				me.getFeed(url.getFriendFeed, 1, true, true);
+				me.getFeed(url.getNeighborFeed, 1, false);
+				me.getFeed(url.getBlockFeed, 1, false);
+				me.getFeed(url.getHoodFeed, 1, false);
+			});
+		},
+
 		initMapMarker: function (data, dotType, titleName) {
 
-			var infowindow = new google.maps.InfoWindow();
+			
+			infowindow = new google.maps.InfoWindow();
 
 			$.each(data, function(i , v) {
 				if (v.lantitude && v.longitude || v.latitude && v.longitude) {
@@ -464,7 +499,7 @@
 			$('#homeNav').click(function() {
 				$('.center-box').addClass('hide');
 				$('#msgBox').removeClass('hide');
-				me.getFeed(url.getFriendFeed, 0, true);
+				me.getFeed(url.getFriendFeed, 0, true, true);
 				me.getFeed(url.getNeighborFeed, 0, false);
 				me.getFeed(url.getBlockFeed, 0, false);
 				me.getFeed(url.getHoodFeed, 0, false);
