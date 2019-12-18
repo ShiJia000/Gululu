@@ -59,7 +59,7 @@ class getNotification extends api {
 	 * @return [type] [description]
 	 */
 	private function getNeiNoti() {
-		$sql = 'SELECT u.uid, u.firstname, u.lastname, u.photo FROM neighbor n, user u WHERE n.neighbor_uid = u.uid AND is_valid = 0 AND n.uid = ' . $this->uid . ';';
+		$sql = 'SELECT u.uid, u.firstname, u.lastname, u.photo FROM neighbor n, user u WHERE n.uid = u.uid  AND n.neighbor_uid = ' . $this->uid . ' AND n.uid NOT IN (SELECT neighbor_uid AS uid FROM neighbor WHERE uid = ' . $this->uid . ');';
 
 		$query = mysqli_query($this->conn, $sql);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
