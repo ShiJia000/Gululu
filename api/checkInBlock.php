@@ -16,9 +16,8 @@ class checkInBlock extends api {
 		//check not NULL
 		$this->checkNotNull();
 
-		$check = 'SELECT jb.bid, b.bname FROM join_block jb, block b WHERE jb.bid = b.bid AND jb.uid=' . $this->uid . ' AND jb.is_approved = 1;';
+		$check = 'SELECT jb.bid, b.bname, jb.is_approved FROM join_block jb, block b WHERE jb.bid = b.bid AND jb.uid=' . $this->uid . ' AND (jb.is_approved = 0 OR jb.is_approved = 1);';
 
-		// var_dump($check);
 
 		$query = $conn->query($check);
 		$checkData = mysqli_fetch_all($query, MYSQLI_ASSOC);

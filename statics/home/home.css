@@ -164,3 +164,29 @@ span.noti-num {
 .message-container .msg-item.noti {
 	margin-bottom: 0px;
 }
+
+.now-in-block {
+	font-size: 24px;
+}
+
+#lstBlock {
+	margin-top: 30px;
+}
+#lstBlock h3 {
+	margin-left: 10px;
+}
+.hname {
+	font-weight: bold;
+}
+
+.block-container {
+	margin-top: 10px;
+}
+
+#Recommendation {
+	margin-top: 10px;
+}
+
+#Recommendation_n {
+	margin-top: 10px;
+}

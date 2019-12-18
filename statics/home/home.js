@@ -49,8 +49,10 @@
 			this.availableFriend();
 			this.listNeighbors();
 			this.availableNeighbor();
+			// haochen
 			this.listBlocks();
-			this.showBlock();
+			// 
+			// this.showBlock();
 			this.joinBlock();
 			this.leaveBlock();
 		},
@@ -517,7 +519,7 @@
 					friend_uid: $this.parents('.message-container').data('fid')
 				};
 
-				me.addOrCancelFriendAjax(parms);
+				me.addOrCancelFriendAjax(params);
 			});
 		},
 
@@ -592,6 +594,7 @@
 		},
 
 		listBlocks: function (){
+			var me = this;
 			$.ajax({
 				url: url.listblock,
 				method: 'GET',
@@ -600,10 +603,11 @@
 				success: function (res){
 					if (res.status == 0){
 						if(res.data.length>0){
-
 							var bt=baidu.template;
 							var html = bt('blockTpl', res);
-							$('#lstBlock').append(html);	
+							$('#lstBlock').append(html);
+
+							me.showBlock();
 						}else{
 							alert(res.message);
 						}}
@@ -623,7 +627,18 @@
 
 				success: function (res){
 					if (res.status == 0){
-						$('#haochen').empty().append(res.data[0].bname);
+						$('.block-tip').addClass('hide');
+						if (res.data.length == 0) {
+							$('#leaveBlock').addClass('hide');
+							$('#blockTip3').removeClass('hide');
+						} else if (res.data[0].is_approved == "0") {
+							$('#blockTip2').removeClass('hide');
+							$('#leaveBlock').addClass('hide');
+						} else {
+							$('#blockTip1').removeClass('hide');
+						}
+						$('#haochen').empty().append(res.data[0].bname).parents('.now-in-block').data('bid', res.data[0].bid);
+						$('#blockId' + res.data[0].bid).remove();
 					}else{
 						alert(res.message);
 					}
@@ -637,53 +652,59 @@
 		},
 
 		joinBlock: function () {
+			var me = this;
 			$('#lstBlock').delegate('.join-block-btn','click',function(){
 				$this = $(this);
 				var params = {
 					bid:$this.parents('.block-container').data('bid')
 				};
 
-			$.ajax({
-				url: url.joinBlock,
-				method: 'POST',
-				dataType: 'json',
-				data: params,
+				$.ajax({
+					url: url.joinBlock,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
 
-				success: function (res) {
-					if (res.status != 0){
-						alert(res.message);
+					success: function (res) {
+						if (res.status != 0){
+							alert(res.message);
+						} else {
+							me.listBlocks();
+						}
+					},
+					error: function (e){
+						alert('HTTP request error!');
 					}
-				},
-				error: function (e){
-					alert('HTTP request error!');
-				}
-			})
-		});
+				})
+			});
 		},
 
 		leaveBlock: function () {
-			$('#lstBlock').delegate('.leave-block-btn','click',function(){
+			var me = this;
+			$('#leaveBlock').click(function() {
 				$this = $(this);
 				var params = {
-					bid:$this.parents('.block-container').data('bid')
+					bid: $this.parents('.now-in-block').data('bid')
 				};
 
-			$.ajax({
-				url: url.leaveBlock,
-				method: 'POST',
-				dataType: 'json',
-				data: params,
+				$.ajax({
+					url: url.leaveBlock,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
 
-				success: function (res) {
-					if (res.status != 0){
-						alert(res.message);
+					success: function (res) {
+						if (res.status == 0){
+							me.listBlocks();
+						} else {
+							alert(res.message);
+						}
+					},
+					error: function (e){
+						alert('HTTP request error!');
 					}
-				},
-				error: function (e){
-					alert('HTTP request error!');
-				}
-			})
-		});
+				})
+			});
 		},
 
 		listNeighbors: function () {
@@ -745,6 +766,7 @@
 		},
 
 		addOrCancelNeighborAjax: function (params) {
+			var me = this;
 			$.ajax({
 				url: url.addOrCancelNeighbor,
 				method: 'POST',
@@ -754,6 +776,8 @@
 				success: function (res) {
 					if (res.status != 0){
 						alert(res.message);
+					} else {
+						me.initNoti;
 					}
 				},
 				error: function (e){
