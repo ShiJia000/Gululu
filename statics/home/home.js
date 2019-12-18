@@ -44,9 +44,9 @@
 			this.getFeed(url.getHoodFeed, 0);
 			this.initBlockMap();
 			this.bind();
-			this.listFriends();
+			// this.listFriends();
 			this.addFriends();
-			this.availableFriend();
+			// this.availableFriend();
 			// this.listNeighbors();
 			// this.availableNeighbor();
 			// haochen
@@ -383,6 +383,9 @@
 				} else if (showId == 'addNeighborBox') {
 					me.listNeighbors();
 					me.availableNeighbor();
+				} else if (showId == 'addFriendBox') {
+					me.listFriends();
+					me.availableFriend();
 				}
 			});
 		},
@@ -493,13 +496,9 @@
 
 				success: function (res) {
 					if (res.status == 0){
-						if(res.data.length>0){
-							var bt = baidu.template;
-							var html = bt('friendTpl', res);
-							$('#lstFriends').append(html);
-						}
-					}else{
-						// alert(res.message);
+						var bt = baidu.template;
+						var html = bt('friendTpl', res);
+						$('#lstFriends').empty().append(html);
 					}
 				},
 				error: function (e) {
@@ -532,6 +531,7 @@
 		},
 
 		addOrCancelFriendAjax: function (params) {
+			var me = this;
 			$.ajax({
 				url: url.acceptOrCancelFriend,
 				method: 'POST',
@@ -540,7 +540,8 @@
 
 				success: function (res) {
 					if (res.status == 0){
-						pass;
+						me.listFriends();
+						me.availableFriend();
 					}else{
 						alert(res.message);
 					}
@@ -559,14 +560,9 @@
 
 				success: function (res){
 					if (res.status == 0){
-						if(res.data.length>0){
-
-							var bt=baidu.template;
-							var html = bt('RecomTpl', res);
-							$('#Recommendation').append(html);
-						}
-					}else{
-						// alert(res.message);
+						var bt=baidu.template;
+						var html = bt('RecomTpl', res);
+						$('#Recommendation').empty().append(html);
 					}
 				},
 				error: function (e){
@@ -577,6 +573,7 @@
 		},
 
 		addFriends: function(){
+			var me = this;
 			$('#Recommendation').delegate('.add-friend-btn','click',function(){
 				$this = $(this);
 				var params = {
@@ -590,7 +587,10 @@
 					data: params,
 
 					success: function (res){
-						if (res.status != 0){
+						if (res.status == 0){
+							me.listFriends();
+							me.availableFriend();
+						} else {
 							alert(res.message);
 						}
 					},

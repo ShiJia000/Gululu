@@ -12,18 +12,14 @@ class getFriendInfo extends api {
 		$uid = intval($_COOKIE['uid']);
 		
 
-		$friends = 'SELECT f.uid, f.friend_uid as friend_id, u.firstname, u.lastname, u.photo, b.bname FROM friend f, user u, join_block jb, block b WHERE b.bid=jb.bid AND jb.uid = u.uid AND jb.is_approved = 1 AND u.uid = f.friend_uid AND f.is_valid=1 AND f.uid=' . $uid . ';';
+		$friends = 'SELECT f.uid, f.friend_uid as friend_id, u.firstname, u.lastname, u.photo, b.bname , f.is_valid FROM friend f, user u, join_block jb, block b WHERE b.bid=jb.bid AND jb.uid = u.uid AND jb.is_approved = 1 AND u.uid = f.friend_uid AND (f.is_valid=1 OR f.is_valid = 0) AND f.uid=' . $uid . ';';
 
 
 
 		$query = mysqli_query($this->conn, $friends);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		if ($data) {
-			return $data;
-		} else {
-			throw new Exception("No friends.");
-		}
+		return $data;
 	}
 }
 

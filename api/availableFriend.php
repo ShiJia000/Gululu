@@ -19,11 +19,7 @@ class availableFriend extends api {
 		$query = mysqli_query($this->conn, $sql);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		if ($data) {
-			return $data;
-		} else {
-			throw new Exception("No friends.");
-		}
+		return $data;
 	}
 }
 

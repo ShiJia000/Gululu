@@ -198,11 +198,11 @@
 
             <!-- Add Friend -->
             <div class="col-7 center-box hide" id="addFriendBox">
+                <h4>Fridends List</h4>
                 <div id="lstFriends">
-                    <h4>Fridends List</h4>
                 </div>
+                <h4>Recommendations</h4>
                 <div id="Recommendation">
-                    <h4>Recommendations</h4>
                 </div>
             </div>
 
@@ -429,6 +429,7 @@
     async defer></script>
     <script id="friendTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
+        <% if (data[i].is_valid == "0") {%>
         <div class="message-container friend-container" data-fid="<%=data[i].friend_id%>">
             <div>
                 <p> Name: 
@@ -442,9 +443,27 @@
                 </p>
             </div>
             <div>
-                <button class="btn btn-outline-secondary cancel-friend-btn">Remove friend</button>
+                <button class="btn btn-outline-secondary cancel-friend-btn" disabled>Watting...</button>
             </div>
         </div>
+        <%} else {%>
+        <div class="message-container friend-container" data-fid="<%=data[i].friend_id%>">
+            <div>
+                <p> Name: 
+                    <%=data[i].firstname%>
+                    <%=data[i].lastname%>
+                </p>
+            </div>
+            <div>
+                <p> Block:
+                    <%=data[i].bname%>
+                </p>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary cancel-friend-btn">Cancel Friend</button>
+            </div>
+        </div>
+        <%}%>
         <%}%>
     </script>
 
