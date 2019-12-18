@@ -13,7 +13,7 @@ class avaNeighbor extends api {
 		$uid = intval($_GET['uid']);
 		// $uid = intval($_COOKIE['uid']);
 		
-		$sql = 'SELECT u.uid, u.firstname, u.lastname, jb.bid FROM user u, join_block jb,(SELECT uid, bid FROM join_block WHERE uid=' . $uid . ' AND is_approved=1) as t WHERE u.uid = jb.uid AND jb.bid = t.bid AND is_approved=1 AND u.uid<>' . $uid . ' AND u.uid NOT IN (SELECT neighbor_uid FROM neighbor WHERE uid=' . $uid . ' AND is_valid=1);';
+		$sql = 'SELECT distinct u.uid, u.firstname, u.lastname, jb.bid FROM user u, join_block jb,(SELECT uid, bid FROM join_block WHERE uid=' . $uid . ' AND is_approved=1) as t WHERE u.uid = jb.uid AND jb.bid = t.bid AND is_approved=1 AND u.uid<>' . $uid . ' AND u.uid NOT IN (SELECT neighbor_uid FROM neighbor WHERE uid=' . $uid . ' AND is_valid=1);';
 
 
 		// var_dump($sql);
