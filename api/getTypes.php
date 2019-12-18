@@ -6,10 +6,8 @@
 
 require_once 'api.php';
 class getTypes extends api {
-	protected $bolCheckLogin = false;
 	public function doExecute() {
 		$conn = $this->conn;
-
 		$sql = "SELECT * FROM type;";
 		$query = $conn->query($sql);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);

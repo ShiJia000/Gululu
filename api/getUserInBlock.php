@@ -6,7 +6,7 @@
 
 require_once 'api.php';
 class getUserInBlock extends api {
-	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		$conn = $this->conn;
 		$uid = intval($_COOKIE['uid']);

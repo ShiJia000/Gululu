@@ -5,12 +5,9 @@
 require_once 'api.php';
 class checkInBlock extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		// in case of sql injection
 		$conn = $this->conn;
-		// $this->uid = intval($_GET['uid']);
 		$this->uid = intval($_COOKIE['uid']);
 
 		//check not NULL

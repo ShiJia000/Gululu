@@ -6,8 +6,6 @@ require_once 'api.php';
 
 class getFriendFeed extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_COOKIE['uid']);
@@ -25,6 +23,8 @@ class getFriendFeed extends api {
 
 		$query = mysqli_query($this->conn, $getFriendMsg);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
+
+		// var_dump($data[0]['mid']);
 
 		foreach ($data as $key => $value) {
 			$mid = $value['mid'];

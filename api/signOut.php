@@ -7,8 +7,6 @@
 require_once 'api.php';
 class signOut extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		$conn = $this->conn;
 

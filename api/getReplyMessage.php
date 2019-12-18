@@ -4,7 +4,7 @@
  */
 require_once 'api.php';
 class getReplyMessage extends api {
-	protected $bolCheckLogin = false;
+
 	public function doExecute() {
 		// in case of sql injection
 		$mid = intval($_GET['mid']);

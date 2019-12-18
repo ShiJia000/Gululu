@@ -5,8 +5,6 @@
 require_once 'api.php';
 class getHoodFeed extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		// in case of sql injection
 		$uid = intval($_COOKIE['uid']);

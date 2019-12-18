@@ -7,8 +7,6 @@
 require_once 'api.php';
 class signOut extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute() {
 		$lat = $_GET['lat'];
 		$lng = $_GET['lng'];

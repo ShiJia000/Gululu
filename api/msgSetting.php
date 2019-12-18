@@ -6,7 +6,7 @@
 
 require_once 'api.php';
 class msgSetting extends api{
-	protected $bolCheckLogin = false;
+
 	public function doExecute(){
 		$conn = $this->conn;
 		$this->uid = intval($_POST['uid']);

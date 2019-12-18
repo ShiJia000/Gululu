@@ -5,7 +5,7 @@
 
 require_once 'api.php';
 class searchKeywordsOfMessage extends api{
-	protected $bolCheckLogin = false;
+
 	public function doExecute(){
 		$conn = $this->conn;
 		$this->searchText = $this->check($_GET['searchText']);

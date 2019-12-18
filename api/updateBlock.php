@@ -6,8 +6,6 @@
 require_once 'api.php';
 class updateBlock extends api {
 
-	protected $bolCheckLogin = false;
-
 	public function doExecute(){
 		$conn = $this->conn;
 		$conn->autocommit(false);
