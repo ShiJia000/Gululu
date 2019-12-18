@@ -6,6 +6,8 @@
 require_once 'api.php';
 class signUp extends api {
 
+	protected $bolCheckLogin = false;
+	
 	public function doExecute() {
 		$conn = $this->conn;
 
