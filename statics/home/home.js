@@ -63,6 +63,7 @@
 			this.addLocation();
 			this.signOut();
 			this.search();
+			this.showSide();
 		},
 
 		initType: function () {
@@ -310,7 +311,7 @@
 			var me = this;
 			$('#search').click(function(e) {
 				e.preventDefault();
-				
+
 				var params = $('#searchForm').serialize();
 				$.ajax({
 					url: url.search,
@@ -329,6 +330,14 @@
 					}
 				});
 
+			});
+		},
+
+		showSide: function() {
+			$('#sidebar').delegate('.show-part', 'click', function () {
+				showId = $(this).data('id');
+				$('.center-box').addClass('hide');
+				$('#' + showId).removeClass('hide');
 			});
 		},
 
