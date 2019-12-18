@@ -147,3 +147,20 @@ body {
 #searchForm .form-control {
 	margin-left: 10px;
 }
+
+span.noti-num {
+	width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    color: #ffffff;
+    float: right;
+    background: red;
+    text-align: center;
+    margin-top: -10px;
+    margin-left: -5px;
+    font-size: 10px;
+}
+
+.message-container .msg-item.noti {
+	margin-bottom: 0px;
+}

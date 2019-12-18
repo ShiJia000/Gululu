@@ -47,6 +47,9 @@ footer a {
     border: 0px;
 }
 
+.btn {
+    font-size: 14px;
+}
 .btn-primary {
     font-size: 14px;
     color: #fff;

@@ -16,10 +16,10 @@
 		signOut: 'api/signOut',
 		listFriends: 'api/getFriendInfo',
 		addFriend: 'api/addFriend',
-		cancelFriend: 'api/acceptFriend',
 		availFriend: 'api/availableFriend',
 		listNeighbor: 'api/getNeighborInfo',
-		addNeighbor: 'api/addNeighbor',
+		addOrCancelNeighbor: 'api/addNeighbor',
+		acceptOrCancelFriend: 'api/acceptFriend',
 		availNeighbor: 'api/avaNeighbor',
 		listblock: 'api/getBlockInfo',
 		joinBlock: 'api/joinBlock',
@@ -28,12 +28,15 @@
 		parseLoc: 'api/parseLocToAddr',
 		getUserInBlock: 'api/getUserInBlock',
 		search: 'api/searchKeywords',
+		getNoti: 'api/getNotification',
+		accOrDenyJoinBlock: 'api/updateBlock'
 	};
 
 	var homepage = {
 		init: function () {
 			this.initType();
 			$('#msgTplContainer').empty();
+			this.initNoti();
 			this.getFeed(url.getFriendFeed, 0);
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
@@ -41,13 +44,10 @@
 			this.initBlockMap();
 			this.bind();
 			this.listFriends();
-			this.cancelFriends();
 			this.addFriends();
 			this.availableFriend();
 			this.listNeighbors();
-			this.cancelNeighbor();
 			this.availableNeighbor();
-			this.addNeighbor();
 			this.listBlocks();
 			this.joinBlock();
 			this.leaveBlock();
@@ -64,6 +64,10 @@
 			this.signOut();
 			this.search();
 			this.showSide();
+			this.showNoti();
+			this.accOrCancelFriend();
+			this.addOrCancelNeighbor();
+			this.accOrDenyJoinBlock();
 		},
 
 		initType: function () {
@@ -136,6 +140,30 @@
 				var html = bt('msgTpl', res);
 				$('#msgTplContainer').append(html);
 			}
+		},
+
+		initNoti:function () {
+			$.ajax({
+				url: url.getNoti,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					// add num
+					var totalNum = res.data.totalNum;
+					if (totalNum > 0) {
+						$('#notiNum').removeClass('hide').html(totalNum);
+
+						// add notification content to center-box
+						// res.data.notifications
+						var bt = baidu.template;
+						var html = bt('notiTpl', res.data.notifications);
+						$('#notiBox').append(html);
+					}
+				},
+				error: function () {
+					alert('HTTP request error!');
+				}
+			});
 		},
 
 		getFeed: function (feedUrl, unread) {
@@ -341,6 +369,13 @@
 			});
 		},
 
+		showNoti:function () {
+			$('#showNoti').click(function() {
+				$('.center-box').addClass('hide');
+				$('#notiBox').removeClass('hide');
+			});
+		},
+
 		initMapMarker: function (data, dotType, titleName) {
 
 			var infowindow = new google.maps.InfoWindow();
@@ -455,7 +490,8 @@
 			});
 		},
 
-		cancelFriends: function(){
+		accOrCancelFriend: function(){
+			var me = this;
 			$('#lstFriends').delegate('.cancel-friend-btn', 'click', function () {
 				$this = $(this);
 				var params = {
@@ -463,23 +499,37 @@
 					friend_uid: $this.parents('.friend-container').data('fid')
 				};
 
-				$.ajax({
-					url: url.cancelFriend,
-					method: 'POST',
-					dataType: 'json',
-					data:params,
+				me.addOrCancelFriendAjax(params);
+			});
 
-					success: function (res) {
-						if (res.status == 0){
-							pass;
-						}else{
-							alert(res.message);
-						}
-					},
-					error: function (e) {
-						alert('HTTP request error!');
+			$('#notiBox').delegate('.friend-noti-btn', 'click', function () {
+				$this = $(this);
+				var params = {
+					is_valid: $this.data('isvalid'),
+					friend_uid: $this.parents('.message-container').data('fid')
+				};
+
+				me.addOrCancelFriendAjax(parms);
+			});
+		},
+
+		addOrCancelFriendAjax: function (params) {
+			$.ajax({
+				url: url.acceptOrCancelFriend,
+				method: 'POST',
+				dataType: 'json',
+				data: params,
+
+				success: function (res) {
+					if (res.status == 0){
+						pass;
+					}else{
+						alert(res.message);
 					}
-				})
+				},
+				error: function (e) {
+					alert('HTTP request error!');
+				}
 			});
 		},
 
@@ -631,16 +681,43 @@
 			});
 		},
 
-		cancelNeighbor: function () {
+		addOrCancelNeighbor: function () {
+			// add neighbor in neighbor page
+			$('#Recommendation_n').delegate('.add-neighbor-btn','click',function(){
+				var $this = $(this);
+				var params = {
+					neighbor_uid: $this.parents('.neighbor-container').data('uid'),
+					is_valid: 1
+				};
+				me.addOrCancelNeighborAjax(params);
+			});
+
+			// add neighbor in notificaition page
+			$('#notiBox').delegate('.neighbor-noti-btn', 'click', function () {
+				var $this = $(this);
+				var params = {
+					neighbor_uid: $this.parents('.message-container').data('neighborId'),
+					is_valid: $this.data('isvalid')
+				};
+
+				me.addOrCancelNeighborAjax(params);
+			});
+
+			// cancel neighbor in neighbor page
 			$('#lstNeighbors').delegate('.cancel-neighbor-btn','click',function(){
-				$this = $(this);
+				var $this = $(this);
 				var params = {
 					neighbor_uid: $this.parents('.neighbor-container').data('nid'),
 					is_valid: -1
 				};
 
+				me.addOrCancelNeighborAjax(params);
+			});
+		},
+
+		addOrCancelNeighborAjax: function (params) {
 			$.ajax({
-				url: url.addNeighbor,
+				url: url.addOrCancelNeighbor,
 				method: 'POST',
 				dataType: 'json',
 				data: params,
@@ -653,8 +730,33 @@
 				error: function (e){
 					alert('HTTP request error!');
 				}
-			})
-		});
+			});
+		},
+
+		accOrDenyJoinBlock: function (params) {
+			$('#notiBox').delegate('.acc-deny-join-btn', 'click', function() {
+				var $this = $(this);
+				var params = {
+					joinid: $this.parents('.message-container').data('joinid'),
+					is_agree: $this.data('isvalid')
+				};
+
+				$.ajax({
+					url: url.accOrDenyJoinBlock,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
+					success: function (res) {
+						if (res.status != 0){
+							alert(res.message);
+						}
+					},
+					error: function () {
+						alert('HTTP request error!');
+					}
+
+				});
+			});
 		},
 
 		availableNeighbor: function(){
@@ -679,32 +781,6 @@
 					alert('HTTP request error!');
 				}
 
-			});
-		},
-
-		addNeighbor: function () {
-			$('#Recommendation_n').delegate('.add-neighbor-btn','click',function(){
-				$this = $(this);
-				var params = {
-					neighbor_uid: $this.parents('.neighbor-container').data('uid'),
-					is_valid: 1
-				};
-
-				$.ajax({
-					url: url.addNeighbor,
-					method: 'POST',
-					dataType: 'json',
-					data: params,
-
-					success: function (res) {
-						if (res.status != 0){
-							alert(res.message);
-						}
-					},
-					error: function (e){
-						alert('HTTP request error!');
-					}
-				});
 			});
 		}
 	};

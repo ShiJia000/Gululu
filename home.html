@@ -24,8 +24,14 @@
                 <button class="btn btn-primary my-2 my-sm-0" type="submit" id="search">Search</button>
             </form>
             <ul class="navbar-nav">
-                <li class="nav-item"><i class="fa fa-bell fa-lg"></i></li>
-                <li class="nav-item"><i class="fa fa-envelope fa-lg"></i></li>
+                <li class="nav-item" id="showNoti">
+                    <i class="fa fa-bell fa-lg"></i>
+                    <span class="noti-num hide" id="notiNum">1</span>
+                </li>
+                <li class="nav-item">
+                    <i class="fa fa-envelope fa-lg"></i>
+                    <span class="noti-num hide" id="msgNum">1</span>
+                </li>
                 <div class="dropdown">
                 <li class="nav-item dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user fa-lg"></i></li>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenu2" id="user-dropdown">
@@ -227,6 +233,11 @@
                 <div id="lstBlock">
                     <h3>Choose a block:</h3>
                 </div>
+            </div>
+
+            <!-- show notification -->
+            <div class="col-7 center-box hide" id="notiBox">
+                
             </div>
 
 
@@ -438,7 +449,7 @@
         <%}%>
     </script>
 
-    <script id="RecomTpl" type="text/htm">
+    <script id="RecomTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
         <div class="message-container friend-container" data-uid="<%=data[i].uid%>">
             <div>
@@ -459,7 +470,7 @@
         <%}%>
     </script>
 
-    <script id="neighTpl" type="text/htm">
+    <script id="neighTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
         <div class="message-container neighbor-container" data-nid="<%=data[i].neighbor_id%>">
             <div>
@@ -475,7 +486,7 @@
         <%}%>
     </script>
 
-    <script id="RecomTpl_n" type="text/htm">
+    <script id="RecomTpl_n" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
         <div class="message-container neighbor-container" data-uid="<%=data[i].uid%>">
             <div>
@@ -494,7 +505,7 @@
 
 
 
-    <script id="blockTpl" type="text/htm">
+    <script id="blockTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
             <div class="message-container">
                     <p> <%=data[i].hname%></p>
@@ -511,7 +522,87 @@
         <%}%>
     </script>
 
-    
+    <script id="notiTpl" type="text/html">
+        <div>
+            <%if (friendNoti.length > 0) {%>
+                <h3>Friend Requests</h3>
+            <%}%>
+            <% for (var i = 0; i < friendNoti.length; i++) {%>
+                <div class="message-container" data-fid="<%=friendNoti[i].uid%>">
+                    <div class="message-box">
+                        <div class="msg-item msg-sender row noti">
+                            <div class="col-1 avatar">
+                                <img src="statics/common/img/test_avatar.png">
+                            </div>
+                            <div class="col-8 sender-info">
+                                <span class="sender-name"><%=friendNoti[i].firstname%> <%=friendNoti[i].lastname%> want to add you as his / her friend.</span>
+                                <div class="col-3">
+                                    <button class="btn btn-primary friend-noti-btn" data-isvalid="1">
+                                        Accept
+                                    </button>
+                                    <button class="btn btn-outline-secondary friend-noti-btn" data-isvalid="-1">
+                                        Decline
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+        <div>
+            <%if (neighborNoti.length > 0) {%>
+                <h3>Neighbor Requests</h3>
+            <%}%>
+            <% for (var i = 0; i < neighborNoti.length; i++) {%>
+                <div class="message-container" data-neighborId="<%=neighborNoti[i].uid%>">
+                    <div class="message-box">
+                        <div class="msg-item msg-sender row noti">
+                            <div class="col-1 avatar">
+                                <img src="statics/common/img/test_avatar.png">
+                            </div>
+                            <div class="col-8 sender-info">
+                                <span class="sender-name"><%=neighborNoti[i].firstname%> <%=neighborNoti[i].lastname%> want to add you as his / her neighbor.</span>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary neighbor-noti-btn" data-isvalid="1">Accept</button>
+                                <button class="btn btn-outline-secondary neighbor-noti-btn" data-isvalid="-1">Decline</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+        <div>
+            <%if (joinBlockNoti.length > 0) {%>
+                <h3>Join Block Requests</h3>
+            <%}%>
+            <% for (var i = 0; i < joinBlockNoti.length; i++) {%>
+                <div class="message-container" data-uid="<%=joinBlockNoti[i].uid%>" data-joinid="joinBlockNoti[i].joinid">
+                    <div class="message-box">
+                        <div class="msg-item msg-sender row noti">
+                            <div class="col-1 avatar">
+                                <img src="statics/common/img/test_avatar.png">
+                            </div>
+                            <div class="col-8 sender-info">
+                                <span class="sender-name"><%=joinBlockNoti[i].firstname%> <%=joinBlockNoti[i].lastname%> want to join your block.</span>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary acc-deny-join-btn" data-isvalid="1">
+                                    Accept
+                                </button>
+                                <button class="btn btn-outline-secondary acc-deny-join-btn" data-isvalid="-1">
+                                    Decline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <%}%> 
+        </div>
+    </script>
+
+
 
     <script src="statics/common/js/jquery-3.4.1.min.js"></script>
     <script src="statics/common/js/jquery.cookie.js"></script>

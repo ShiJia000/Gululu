@@ -72,7 +72,7 @@ class getNotification extends api {
 	 * @return [type] [description]
 	 */
 	private function getJoinBlockNoti() {
-		$sql = 'WITH related_apply AS (SELECT jbu.uid, jba.joinid, jba.uid as apply_uid FROM join_block jba, join_block jbu WHERE jba.is_approved=0 AND jba.bid = jbu.bid AND jbu.is_approved = 1 AND jbu.uid = ' . $this->uid . ') SELECT u.uid, u.firstname, u.lastname, u.photo FROM related_apply ra, user u WHERE ra.apply_uid = u.uid AND (ra.uid, ra.joinid) not IN (SELECT uid, joinid FROM agree_join);';
+		$sql = 'WITH related_apply AS (SELECT jbu.uid, jba.joinid, jba.uid as apply_uid FROM join_block jba, join_block jbu WHERE jba.is_approved=0 AND jba.bid = jbu.bid AND jbu.is_approved = 1 AND jbu.uid = ' . $this->uid . ') SELECT u.uid, u.firstname, u.lastname, u.photo, ra.joinid FROM related_apply ra, user u WHERE ra.apply_uid = u.uid AND (ra.uid, ra.joinid) not IN (SELECT uid, joinid FROM agree_join);';
 
 		$query = mysqli_query($this->conn, $sql);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
