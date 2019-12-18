@@ -44,15 +44,7 @@
 			this.getFeed(url.getHoodFeed, 0);
 			this.initBlockMap();
 			this.bind();
-			// this.listFriends();
 			this.addFriends();
-			// this.availableFriend();
-			// this.listNeighbors();
-			// this.availableNeighbor();
-			// haochen
-			// this.listBlocks();
-			// 
-			// this.showBlock();
 			this.joinBlock();
 			this.leaveBlock();
 		},
@@ -543,6 +535,7 @@
 					if (res.status == 0){
 						me.listFriends();
 						me.availableFriend();
+						me.initNoti();
 					}else{
 						alert(res.message);
 					}
