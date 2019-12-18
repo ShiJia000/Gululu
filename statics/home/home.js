@@ -137,16 +137,12 @@
 		},
 
 		initMsg: function (res, isEmpty=false) {
-			if (res.data.length > 0) {
-				var bt=baidu.template;
-				var html = bt('msgTpl', res);
-				if (!isEmpty) {
-					$('#msgTplContainer').append(html);
-				} else {
-					$('#msgTplContainer').empty().append(html);
-				}
-				
-
+			var bt=baidu.template;
+			var html = bt('msgTpl', res);
+			if (!isEmpty) {
+				$('#msgTplContainer').append(html);
+			} else {
+				$('#msgTplContainer').empty().append(html);
 			}
 		},
 
@@ -207,7 +203,7 @@
 
 						me.initMsg(res, empty);
 						
-						me.initMapMarker(res.data, 'pink', 'title');
+						me.initMapMarker(res.data, 'statics/common/img/christmas-envelop.png', 'title');
 
 					} else {
 						alert(res.message);
@@ -220,12 +216,13 @@
 		},
 
 		updateMsgToRead: function () {
+			var me = this;
 			$.ajax({
 				url: url.updateMsgToRead,
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
-
+					me.initUnreadNum();
 				},
 				error: function (e) {
 					alert('HTTP request error!');
@@ -241,7 +238,7 @@
 				dataType: 'json',
 				success: function (res) {
 					if (res.status == 0) {
-						me.initMapMarker(res.data, 'blue', 'firstname');
+						me.initMapMarker(res.data, 'statics/common/img/christmas-person.png', 'firstname');
 					}
 				},
 				error: function () {
@@ -391,6 +388,9 @@
 					data: params,
 					success: function (res) {
 						if (res.status == 0) {
+							// show msgBox
+							$('.center-box').addClass('hide');
+							$('#msgBox').removeClass('hide');
 							me.initMsg(res, true);
 						} else {
 							alert(res.message);
@@ -455,7 +455,7 @@
 			            position: new google.maps.LatLng(v.lantitude ? v.lantitude : v.latitude, v.longitude),
 			            map: map,
 			            icon: {
-					      url: "http://maps.google.com/mapfiles/ms/icons/" + dotType + "-dot.png"
+					      url: dotType
 					    }
 			        });
 			        google.maps.event.addListener(marker, 'click', (function(marker, v) {

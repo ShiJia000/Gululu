@@ -5,6 +5,13 @@ body {
 	margin-top: 15px;
 }
 
+.col-7 {
+	background: url(../common/img/no-message.jpg);
+	background-position: center 100px;
+	background-repeat: no-repeat;
+	background-size: 20%;
+}
+
 .btn-send-msg {
 	border: 1px solid rgba(0,0,0,.125);
     border-radius: 3px;
