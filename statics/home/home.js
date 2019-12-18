@@ -176,7 +176,7 @@
 			});
 		},
 
-		getFeed: function (feedUrl, unread) {
+		getFeed: function (feedUrl, unread, empty=false) {
 			var me = this;
 			var params = {};
 			params.unread = unread;
@@ -188,7 +188,8 @@
 				data: params,
 				success: function(res) {
 					if (res.status == 0) {
-						me.initMsg(res);
+						me.initMsg(res, empty);
+						
 						me.initMapMarker(res.data, 'pink', 'title');
 					} else {
 						alert(res.message);
@@ -443,13 +444,13 @@
 
 		clickHome: function () {
 			var me = this;
-			$('#homeNav', '').click(function() {
+			$('#homeNav').click(function() {
 				$('.center-box').addClass('hide');
 				$('#msgBox').removeClass('hide');
-				me.getFeed(url.getFriendFeed, 0);
-				me.getFeed(url.getNeighborFeed, 0);
-				me.getFeed(url.getBlockFeed, 0);
-				me.getFeed(url.getHoodFeed, 0);
+				me.getFeed(url.getFriendFeed, 0, true);
+				me.getFeed(url.getNeighborFeed, 0, true);
+				me.getFeed(url.getBlockFeed, 0, true);
+				me.getFeed(url.getHoodFeed, 0, true);
 			});
 		},
 
