@@ -14,7 +14,7 @@ class availableFriend extends api {
 		$uid = intval($_COOKIE['uid']);
 		
 
-		$sql = 'SELECT u.uid, u.firstname, u.lastname, b.bname FROM user u, join_block jb, block b,(SELECT jb.uid, hid FROM join_block jb, block b WHERE jb.uid=' . $uid . ' AND jb.bid=b.bid) as t WHERE u.uid = jb.uid AND jb.bid=b.bid AND b.hid = t.hid AND is_approved=1 AND u.uid<>' . $uid . ' AND u.uid NOT IN (SELECT friend_uid FROM friend WHERE uid=' . $uid . ' AND is_valid=1);';
+		$sql = 'SELECT u.uid, u.firstname, u.lastname, b.bname FROM user u, join_block jb, block b,(SELECT jb.uid, hid FROM join_block jb, block b WHERE jb.uid=' . $uid . ' AND jb.bid=b.bid AND jb.is_approved=1) as t WHERE u.uid = jb.uid AND jb.bid=b.bid AND b.hid = t.hid AND is_approved=1 AND u.uid<>' . $uid . ' AND u.uid NOT IN (SELECT friend_uid FROM friend WHERE uid=' . $uid . ' AND is_valid=1);';
 
 		// var_dump($sql);
 
