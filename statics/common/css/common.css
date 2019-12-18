@@ -22,9 +22,6 @@ footer a {
     margin-left: 100px;
 }
 
-.side-bar {
-    margin-top: 20px;
-}
 .nav-item {
     margin: 0 20px 0 20px;
     cursor: pointer;
@@ -74,7 +71,6 @@ footer a {
 	width: 300px!important;
 }
 .right-side-nav {
-	background-color: #F4F8F5;
 	height: 1000px;
 }
 
@@ -94,4 +90,9 @@ footer a {
 
 .hide {
     display: none;
+}
+
+h4 {
+    margin-left: 10px;
+    margin-top: 15px;
 }

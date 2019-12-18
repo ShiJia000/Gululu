@@ -91,32 +91,21 @@
                     <div class="card show-part" data-id="addFriendBox">
                         <div class="card-header pointer" id="headingThree">
                             <p class="mb-0">
-<!--                                 <i class="fas fa-users"></i>&nbsp;&nbsp;Add Friend
- -->
-                                <button class="div-excahnge" type="button" style="border:none;">
-                                    <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Friend
-                                </button>
+                                <i class="fas fa-user-plus div-excahnge"></i>&nbsp;&nbsp;Add Friend
                             </p>
                         </div>
                     </div>
                     <div class="card show-part"  data-id="addNeighborBox">
                         <div class="card-header pointer" id="headingThree">
                             <p class="mb-0">
-<!--                                 <i class="fas fa-users"></i>&nbsp;&nbsp;Add Neighbor
- -->
-                                <button class="div-excahnge" type="button" style="border:none;">
-                                    <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Neighbor
-                                </button>
+                                <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Neighbor
                             </p>
                         </div>
                     </div>
                     <div class="card show-part"  data-id="joinBlockBox">
                         <div class="card-header pointer" id="headingThree">
                             <p class="mb-0">
- <!--                                <i class="fas fa-plus"></i>&nbsp;&nbsp;Join block -->
-                                <button class="div-excahnge" type="button" style="border:none;">
-                                    <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Join block
-                                </button>
+                                <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Join block
                             </p>
                         </div>
                     </div>
@@ -210,31 +199,39 @@
             <!-- Add Friend -->
             <div class="col-7 center-box hide" id="addFriendBox">
                 <div id="lstFriends">
-                    <h3>Fridends List</h3>
+                    <h4>Fridends List</h4>
                 </div>
                 <div id="Recommendation">
-                    <h3>Recommendations</h3>
+                    <h4>Recommendations</h4>
                 </div>
             </div>
 
             <!-- Add Neighbor -->
             <div class="col-7 center-box hide" id="addNeighborBox">
                 <div id="lstNeighbors">
-                    <h3>Neighbors</h3>
+                    <h4>Your Neighbors</h4>
                 </div>
                 <div id="Recommendation_n">
-                    <h3>Recommendations</h3>  
+                    <h4>Recommendations</h4>  
                 </div>
 
             </div>
 
             <!-- Join Block -->
             <div class="col-7 center-box hide" id="joinBlockBox">
-                <div id="lstBlock">
-                    <h3>Choose a block:</h3>
-                    <p>You are now in</p>
-                    <p id="haochen"></p>
+                <div class="message-container" id="nowInBlock">
+                    <div class="now-in-block">
+                        <span id="blockTip1" class="block-tip"> You are now in </span>
+                        <span id="blockTip2" class="block-tip hide"> You are waitting to join in </span>
+                        <span id="blockTip3" class="block-tip hide"> No </span>
+                        <span id="haochen"></span> Block
+                        <button class="btn btn-outline-secondary float-right" id="leaveBlock">Leave Block</button>
+                    </div>
                 </div>
+                <div id="lstBlock">
+                    <h4>Choose another block:</h4>
+                </div>
+
             </div>
 
             <!-- show notification -->
@@ -445,7 +442,7 @@
                 </p>
             </div>
             <div>
-                <button class="cancel-friend-btn">Cancel</button>
+                <button class="btn btn-outline-secondary cancel-friend-btn">Remove friend</button>
             </div>
         </div>
         <%}%>
@@ -466,7 +463,7 @@
                 </p>
             </div>
             <div>
-                <button class="add-friend-btn">Add</button>
+                <button class="btn btn-primary add-friend-btn">Add</button>
             </div>
         </div>
         <%}%>
@@ -482,7 +479,7 @@
                 </p>
             </div> 
             <div>
-                <button class="cancel-neighbor-btn">Cancel</button>
+                <button class="btn btn-outline-secondary cancel-neighbor-btn">Cancel</button>
             </div>
         </div>
         <%}%>
@@ -498,7 +495,7 @@
                 </p>
             </div> 
             <div>
-                <button class="add-neighbor-btn">Add</button>
+                <button class="btn btn-primary add-neighbor-btn">Add</button>
             </div>
         </div>
         <%}%>
@@ -510,13 +507,17 @@
     <script id="blockTpl" type="text/html">
         <% for (var i = 0; i < data.length; i++) {%>
             <div class="message-container">
-                    <p> <%=data[i].hname%></p>
+                    <p class="hname"> <%=data[i].hname%></p>
                     <div>
                         <% for (var j = 0; j < data[i].blocks.length; j++){%>
-                            <div class="block-container" data-bid="<%=data[i].blocks[j].bid%>">
-                                <p><%=data[i].blocks[j].bname%></p>
-                                <button class="join-block-btn">Join</button>
-                                <button class="leave-block-btn">Leave</button>
+                            <div class="block-container row" id="blockId<%=data[i].blocks[j].bid%>" data-bid="<%=data[i].blocks[j].bid%>">
+                                <div class="col-10"><%=data[i].blocks[j].bname%></div>
+                                <div class="col-2">
+                                    <button class="btn btn-primary join-block-btn">
+                                        Join
+                                    </button>
+                                </div>
+                                
                             </div>
                         <%}%>
                     </div>
@@ -527,7 +528,7 @@
     <script id="notiTpl" type="text/html">
         <div>
             <%if (friendNoti.length > 0) {%>
-                <h3>Friend Requests</h3>
+                <h4>Friend Requests</h4>
             <%}%>
             <% for (var i = 0; i < friendNoti.length; i++) {%>
                 <div class="message-container" data-fid="<%=friendNoti[i].uid%>">
@@ -554,7 +555,7 @@
         </div>
         <div>
             <%if (neighborNoti.length > 0) {%>
-                <h3>Neighbor Requests</h3>
+                <h4>Neighbor Requests</h4>
             <%}%>
             <% for (var i = 0; i < neighborNoti.length; i++) {%>
                 <div class="message-container" data-neighborId="<%=neighborNoti[i].uid%>">
@@ -577,7 +578,7 @@
         </div>
         <div>
             <%if (joinBlockNoti.length > 0) {%>
-                <h3>Join Block Requests</h3>
+                <h4>Join Block Requests</h4>
             <%}%>
             <% for (var i = 0; i < joinBlockNoti.length; i++) {%>
                 <div class="message-container" data-uid="<%=joinBlockNoti[i].uid%>" data-joinid="<%=joinBlockNoti[i].joinid%>">
