@@ -154,13 +154,10 @@
 					var totalNum = res.data.totalNum;
 					if (totalNum > 0) {
 						$('#notiNum').removeClass('hide').html(totalNum);
-
-						// add notification content to center-box
-						// res.data.notifications
-						var bt = baidu.template;
-						var html = bt('notiTpl', res.data.notifications);
-						$('#notiBox').append(html);
 					}
+					var bt = baidu.template;
+					var html = bt('notiTpl', res.data.notifications);
+					$('#notiBox').empty().append(html);
 				},
 				error: function () {
 					alert('HTTP request error!');
@@ -384,9 +381,11 @@
 		},
 
 		showNoti:function () {
+			var me = this;
 			$('#showNoti').click(function() {
 				$('.center-box').addClass('hide');
 				$('#notiBox').removeClass('hide');
+				me.initNoti();
 			});
 		},
 
@@ -744,7 +743,7 @@
 			$('#notiBox').delegate('.neighbor-noti-btn', 'click', function () {
 				var $this = $(this);
 				var params = {
-					neighbor_uid: $this.parents('.message-container').data('neighborId'),
+					neighbor_uid: $this.parents('.message-container').data('neighborid'),
 					is_valid: $this.data('isvalid')
 				};
 
@@ -787,6 +786,7 @@
 		},
 
 		accOrDenyJoinBlock: function (params) {
+			var me = this;
 			$('#notiBox').delegate('.acc-deny-join-btn', 'click', function() {
 				var $this = $(this);
 				var params = {
@@ -800,7 +800,9 @@
 					dataType: 'json',
 					data: params,
 					success: function (res) {
-						if (res.status != 0){
+						if (res.status == 0){
+							me.initNoti();
+						} else {
 							alert(res.message);
 						}
 					},

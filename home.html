@@ -8,8 +8,6 @@
     <link href="statics/common/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="statics/home/home.css">
 
-    <!-- <script src="https://kit.fontawesome.com/de00f113db.js" crossorigin="anonymous"></script> -->
-
 </head>
 <body>
     <!-- navbar  -->
@@ -579,7 +577,7 @@
                 <h4>Neighbor Requests</h4>
             <%}%>
             <% for (var i = 0; i < neighborNoti.length; i++) {%>
-                <div class="message-container" data-neighborId="<%=neighborNoti[i].uid%>">
+                <div class="message-container" data-neighborid="<%=neighborNoti[i].uid%>">
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
@@ -589,8 +587,7 @@
                                 <span class="sender-name"><%=neighborNoti[i].firstname%> <%=neighborNoti[i].lastname%> want to add you as his / her neighbor.</span>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-primary neighbor-noti-btn" data-isvalid="1">Accept</button>
-                                <button class="btn btn-outline-secondary neighbor-noti-btn" data-isvalid="-1">Decline</button>
+                                <button class="btn btn-primary neighbor-noti-btn" data-isvalid="1">Add</button>
                             </div>
                         </div>
                     </div>
