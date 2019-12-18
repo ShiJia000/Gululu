@@ -31,7 +31,8 @@
 		search: 'api/searchKeywords',
 		getNoti: 'api/getNotification',
 		accOrDenyJoinBlock: 'api/updateBlock',
-		updateProfile: 'api/updateProfile'
+		updateProfile: 'api/updateProfile',
+		unreadNum: 'api/numMessage'
 	};
 
 	var homepage = {
@@ -39,6 +40,7 @@
 			this.initType();
 			$('#msgTplContainer').empty();
 			this.initNoti();
+			this.initUnreadNum();
 			this.getFeed(url.getFriendFeed, 0);
 			this.getFeed(url.getNeighborFeed, 0);
 			this.getFeed(url.getBlockFeed, 0);
@@ -162,6 +164,23 @@
 					$('#notiBox').empty().append(html);
 				},
 				error: function () {
+					alert('HTTP request error!');
+				}
+			});
+		},
+
+		initUnreadNum: function () {
+			$.ajax({
+				url: url.unreadNum,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					var totalNum = res.data.num;
+					if (totalNum > 0) {
+						$('#msgNum').removeClass('hide').html(totalNum);
+					}
+				},
+				error: function (e) {
 					alert('HTTP request error!');
 				}
 			});

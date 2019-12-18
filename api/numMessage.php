@@ -10,13 +10,13 @@ class numMessage extends api {
 		$conn = $this->conn;
 		$this->uid = intval($_COOKIE['uid']);
 		
-		$message = 'SELECT count(*) as cn FROM receive_msg WHERE uid=' . $this->uid . ';';
+		$message = 'SELECT count(*) as num FROM receive_msg WHERE uid=' . $this->uid . ';';
 
 		$query = mysqli_query($this->conn, $message);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 		if ($data) {
-			return $data;
+			return $data[0];
 		} else {
 			throw new Exception("No message.");
 		}
