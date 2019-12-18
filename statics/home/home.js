@@ -136,11 +136,17 @@
 			});
 		},
 
-		initMsg: function (res) {
+		initMsg: function (res, isEmpty=false) {
 			if (res.data.length > 0) {
 				var bt=baidu.template;
 				var html = bt('msgTpl', res);
-				$('#msgTplContainer').append(html);
+				if (!isEmpty) {
+					$('#msgTplContainer').append(html);
+				} else {
+					$('#msgTplContainer').empty().append(html);
+				}
+				
+
 			}
 		},
 
@@ -350,7 +356,7 @@
 					data: params,
 					success: function (res) {
 						if (res.status == 0) {
-							me.initMsg(res);
+							me.initMsg(res, true);
 						} else {
 							alert(res.message);
 						}
