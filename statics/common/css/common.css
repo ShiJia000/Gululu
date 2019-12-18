@@ -11,7 +11,7 @@ footer a {
 }
 
 .pointer {
-    cursor: pointer;
+    cursor: pointer!important;
 }
 .navbar-light, .bg-light {
 	background-color: #FFFFFF!important;

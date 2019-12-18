@@ -10,7 +10,7 @@ class numMessage extends api {
 		$conn = $this->conn;
 		$this->uid = intval($_COOKIE['uid']);
 		
-		$message = 'SELECT count(*) as num FROM receive_msg WHERE uid=' . $this->uid . ';';
+		$message = 'SELECT count(*) as num FROM receive_msg WHERE is_read = 0 AND uid=' . $this->uid . ';';
 
 		$query = mysqli_query($this->conn, $message);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
