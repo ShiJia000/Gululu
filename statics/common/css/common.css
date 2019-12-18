@@ -36,7 +36,7 @@ footer a {
 }
 
 .card {
-    /*background: #FFFFFF;*/
+    background: #F4F4F7!important;
     border: 0px;
 }
 .card-header{
@@ -99,4 +99,9 @@ h4 {
 
 .no-margin-p {
     margin-bottom: 0
+}
+
+.logo {
+    height: 43px;
+    
 }

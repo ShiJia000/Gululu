@@ -190,3 +190,19 @@ span.noti-num {
 #Recommendation_n {
 	margin-top: 10px;
 }
+
+.profile-card {
+	background: #FFFFFF!important;
+}
+
+.submit-intro {
+	margin-top: 15px;
+}
+
+#aboutMe.form-control:disabled, #aboutMe.form-control[readonly], #aboutFamily.form-control:disabled, #aboutFamily.form-control[readonly]{
+	background-color: #FFFFFF;
+	border: 0;
+}
+.edit-intro {
+	color: #48bf84!important;
+}

@@ -12,7 +12,9 @@
 <body>
     <!-- navbar  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand pointer" href="http://localhost/db_nextdoor/home">Gululu</a>
+        <a class="navbar-brand pointer" href="http://localhost/db_nextdoor/home">
+            <img class="logo" src="statics/common/img/dark-logo.jpg">
+        </a>
 
         <div class="collapse navbar-collapse">
             <form class="form-inline mr-auto" id="searchForm">
@@ -377,15 +379,25 @@
             </div>
         </div>
         <div class="card profile-card">
-            <h5 class="card-header">About me</h5>
+            <h5 class="card-header">About me &nbsp;&nbsp;<a data-id="aboutMe" class="edit-intro pointer">(Edit)</a></h5>
             <div class="card-body">
-                <p class="card-text"><%=data.self_intro%></p>
+                <% if (data.self_intro != null && data.self_intro != "") {%>
+                <textarea class="form-control card-text" id="aboutMe" rows="1" disabled><%=data.self_intro%></textarea>
+                <%} else {%>
+                <textarea class="form-control card-text hide" id="aboutMe" rows="4" disabled></textarea>
+                <%}%>
+                <button class="btn btn-primary submit-intro hide float-right" data-id="aboutMe" data-param="selfIntro">Submit</button>
             </div>
         </div>
         <div class="card profile-card">
-            <h5 class="card-header">About Family</h5>
+            <h5 class="card-header">About Family &nbsp;&nbsp;<a data-id="aboutFamily" class="edit-intro pointer">(Edit)</a></h5>
             <div class="card-body">
-                <p class="card-text"><%=data.family_intro%></p>
+                <% if (data.family_intro != null && data.family_intro != "") {%>
+                <textarea class="form-control card-text" id="aboutFamily" rows="1" disabled><%=data.family_intro%></textarea>
+                <%} else {%>
+                <textarea class="form-control card-text hide" id="aboutFamily" rows="4" disabled></textarea>
+                <%}%>
+                <button class="btn btn-primary submit-intro hide float-right" data-id="aboutFamily" data-param="familyIntro">Submit</button>
             </div>
         </div>
     </script>

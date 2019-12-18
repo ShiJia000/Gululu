@@ -1,5 +1,5 @@
 body{
-	background: url(bg.JPG);
+	background: url(../common/img/bg.JPG);
     background-position: center center;
     background-attachment: fixed;
     -webkit-background-size: cover;
@@ -35,8 +35,12 @@ form {
 	margin-top: 15px;
 }
 .logo-container {
-	margin-left: 180px;
+	margin-left: 50px;
     margin-top: 200px;
 	color: white;
 	font-size: 100px;
+}
+
+.logo-container img {
+	height: 150px;
 }

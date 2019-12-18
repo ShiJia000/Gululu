@@ -30,7 +30,8 @@
 		getUserInBlock: 'api/getUserInBlock',
 		search: 'api/searchKeywords',
 		getNoti: 'api/getNotification',
-		accOrDenyJoinBlock: 'api/updateBlock'
+		accOrDenyJoinBlock: 'api/updateBlock',
+		updateProfile: 'api/updateProfile'
 	};
 
 	var homepage = {
@@ -64,6 +65,7 @@
 			this.accOrCancelFriend();
 			this.addOrCancelNeighbor();
 			this.accOrDenyJoinBlock();
+			this.editIntro();
 		},
 
 		initType: function () {
@@ -414,22 +416,27 @@
 		},
 
 		showProfile: function () {
+			var me = this;
 			$('#profileBtn').click(function() {
 				$('.center-box').addClass('hide');
 				$('#profileBox').removeClass('hide');
-				$.ajax({
-					url:url.getProfile,
-					method: 'GET',
-					dataType: 'json',
-					success: function (res) {
-						var bt = baidu.template;
-						var html = bt('profileTpl', res);
-						$('#profileBox').empty().append(html);
-					},
-					error: function () {
-						alert('HTTP request error!');
-					}
-				});
+				me.initProfile();
+			});
+		},
+
+		initProfile: function (res) {
+			$.ajax({
+				url:url.getProfile,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					var bt = baidu.template;
+					var html = bt('profileTpl', res);
+					$('#profileBox').empty().append(html);
+				},
+				error: function () {
+					alert('HTTP request error!');
+				}
 			});
 		},
 
@@ -831,6 +838,41 @@
 					alert('HTTP request error!');
 				}
 
+			});
+		},
+
+		editIntro: function () {
+			var me = this;
+			$('#profileBox').delegate('.edit-intro', 'click', function() {
+				var $this = $(this);
+				var eleId = $this.data('id');
+				$this.parents('.profile-card').find('textarea').removeClass('hide').attr('disabled', false);
+				$this.parents('.profile-card').find('.submit-intro').removeClass('hide');
+			});
+
+			$('#profileBox').delegate('.submit-intro', 'click', function() {
+				var $this = $(this);
+				var eleId = $this.data('id');
+
+
+				var params = {};
+				params[$this.data('param')] = $('#' + eleId).val();
+
+				$.ajax({
+					url: url.updateProfile,
+					method: 'POST',
+					dataType: 'json',
+					data: params,
+					success: function (res) {
+						if (res.status == 0) {
+							me.initProfile();
+						} else {
+							alert(res.message);
+						}
+					}, error: function (e) {
+						alert('HTTP request error!');
+					}
+				});
 			});
 		}
 	};
