@@ -38,7 +38,7 @@ class joinBlock extends api {
 			$j_block = "INSERT INTO join_block (`uid`, `bid`, `is_approved`, `approve_num`)VALUES (".$this->uid.",".$this->bid.",0,0);";
 		}
 		else{
-			throw new Exception("already exist the user!");
+			throw new Exception("already in other blocks!");
 		}
 		$data = $conn->query($j_block);
 

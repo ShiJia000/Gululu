@@ -26,11 +26,12 @@ class acceptFriend extends api {
 		 
 		//check
 		$check_friend = 'SELECT * FROM friend WHERE uid = ' . $this->uid . ' AND friend_uid = ' . $this->friend_uid. ' AND is_valid <> ' . $this->is_valid . ';';
+		// var_dump($check_friend);
 		$query = $conn->query($check_friend);
 		$checkData = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
 		if (count($checkData) == 0){
-			throw new Exception("Error");
+			throw new Exception("Error!");
 		}
 
 		//add/cancel friends
