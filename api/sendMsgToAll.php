@@ -46,6 +46,7 @@ class sendMsgToOnePerson extends api{
 			throw new Exception("Wrong message type, you can only send message to friends, neighbor or hood", -1);
 		}
 
+
 		// insert data into message
 		$msgSql = "INSERT INTO message (`title`, `subject`, `uid`, `text_body`, `lantitude`, `longitude` , `tid`, `address`) VALUES ('"
 			. $this->title . "', '"
@@ -155,7 +156,7 @@ class sendMsgToOnePerson extends api{
 		$conn = $this->conn;
 		$res = array();
 
-		$sql = "SELECT uid FROM join_block jb, block b WHERE jb.bid = b.bid AND uid <> " . $this->uid . " AND hid = (SELECT hid FROM block WHERE bid = " . $bid . " LIMIT 1);";
+		$sql = "SELECT uid FROM join_block jb, block b WHERE jb.is_approved=1 AND jb.bid = b.bid AND uid <> " . $this->uid . " AND hid = (SELECT hid FROM block WHERE bid = " . $bid . " LIMIT 1);";
 		$query = $conn->query($sql);
 		$uidData = mysqli_fetch_all($query, MYSQLI_ASSOC);
 

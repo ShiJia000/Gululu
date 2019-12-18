@@ -38,7 +38,7 @@ class sendMsgToOnePerson extends api{
 			}
 
 		} else if ($this->tid === 2) {
-			$checkSql = "SELECT * FROM friend WHERE uid = " . $this->uid . " AND neighbor_uid = " . $this->receiveUid . " AND is_valid = 1;";
+			$checkSql = "SELECT * FROM friend WHERE uid = " . $this->uid . " AND friend_uid = " . $this->receiveUid . " AND is_valid = 1;";
 
 			$query = $conn->query($checkSql);
 			$checkData = mysqli_fetch_all($query, MYSQLI_ASSOC);
