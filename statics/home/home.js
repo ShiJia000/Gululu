@@ -22,6 +22,7 @@
 		acceptOrCancelFriend: 'api/acceptFriend',
 		availNeighbor: 'api/avaNeighbor',
 		listblock: 'api/getBlockInfo',
+		showblock: 'api/checkInBlock',
 		joinBlock: 'api/joinBlock',
 		leaveBlock: 'api/leaveBlock',
 		getProfile: 'api/getProfile',
@@ -49,6 +50,7 @@
 			this.listNeighbors();
 			this.availableNeighbor();
 			this.listBlocks();
+			this.showBlock();
 			this.joinBlock();
 			this.leaveBlock();
 		},
@@ -605,6 +607,27 @@
 					alert('HTTP request error!');
 				}
 			});
+		},
+
+		showBlock: function (){
+			$.ajax({
+				url: url.showblock,
+				method: 'POST',
+				dataType:'json',
+
+				success: function (res){
+					if (res.status == 0){
+						$('#haochen').empty().append(res.data[0].bname);
+					}else{
+						alert(res.message);
+					}
+				},
+
+				error: function (e){
+					alert('HTTP request error!');
+				}
+			});
+
 		},
 
 		joinBlock: function () {
