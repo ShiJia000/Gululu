@@ -40,9 +40,9 @@
                     <button class="dropdown-item" type="button" id="profileBtn">
                         <i class="far fa-address-card"></i>&nbsp;&nbsp; Profile
                     </button>
-                    <button class="dropdown-item" type="button">
+                    <!-- <button class="dropdown-item" type="button">
                         <i class="fas fa-cog"></i>&nbsp;&nbsp; Settings
-                    </button>
+                    </button> -->
                     <button class="dropdown-item" type="button" id="signOut">
                         <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp; Sign Out
                     </button>
@@ -124,7 +124,7 @@
                     <div class="row">
                         <div class="col-2">
                             <div class="avatar my-avatar">
-                                <img src="statics/common/img/test_avatar.png">
+                                <img src="statics/common/img/test_avatar.jpg">
                             </div>
                         </div>
                         
@@ -183,7 +183,7 @@
                                 
                             </div>
                             <div class="modal-footer">
-                                <span class="pointer"><i class="fas fa-camera"></i>&nbsp;&nbsp; Add a photo</span>
+                                <!-- <span class="pointer"><i class="fas fa-camera"></i>&nbsp;&nbsp; Add a photo</span> -->
                                 <button type="button" class="btn btn-primary" id="sendMsgBtn">Post</button>
                             </div>
                             </form>
@@ -285,10 +285,10 @@
             <div class="message-box">
                 <div class="msg-item msg-sender row">
                     <div class="col-1 avatar">
-                        <%if (data[i].photo != null && data[i].photo != "")%>
-                            <img src="upload/<%=data[i].photo%>">
+                        <%if (data[i].photo != null && data[i].photo != "") {%>
+                            <img src="uploads/<%=data[i].photo%>">
                         <%} else {%>
-                            <img src="statics/common/img/test_avatar.png">
+                            <img src="statics/common/img/test_avatar.jpg">
                         <%} %>
                     </div>
                     <div class="col-11 sender-info">
@@ -327,10 +327,10 @@
                 <% for (var j = 0; j < data[i].reply.length; j++) {%>
                 <div class="msg-item other-reply row">
                     <div class="col-1 avatar">
-                        <%if (data[i].reply[j].photo != null && data[i].reply[j].photo != "")%>
-                            <img src="upload/<%=data[i].reply[j].photo%>">
+                        <%if (data[i].reply[j].photo != null && data[i].reply[j].photo != "") {%>
+                            <img src="uploads/<%=data[i].reply[j].photo%>">
                         <%} else {%>
-                            <img src="statics/common/img/test_avatar.png">
+                            <img src="statics/common/img/test_avatar.jpg">
                         <%} %>
                     </div>
                     <div class="col-11 reply-content">
@@ -354,7 +354,7 @@
 
                 <div class="msg-item your-reply row">
                     <div class="col-1 avatar my-avatar">
-                        <img src="statics/common/img/test_avatar.png">
+                        <img src="statics/common/img/test_avatar.jpg">
                     </div>
                     <div class="col-11 reply-input">
                         <textarea class="form-control reply-text" name="textBody" rows="2" placeholder="message body" required=""></textarea>
@@ -569,10 +569,10 @@
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
-                                <%if (friendNoti[i].photo != null && friendNoti[i].photo != "")%>
-                                    <img src="upload/<%=friendNoti[i].photo%>">
+                                <%if (friendNoti[i].photo != null && friendNoti[i].photo != "") {%>
+                                    <img src="uploads/<%=friendNoti[i].photo%>">
                                 <%} else {%>
-                                    <img src="statics/common/img/test_avatar.png">
+                                    <img src="statics/common/img/test_avatar.jpg">
                                 <%} %>
                             </div>
                             <div class="col-8 sender-info">
@@ -600,10 +600,10 @@
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
-                                <%if (neighborNoti[i].photo != null && neighborNoti[i].photo != "")%>
-                                    <img src="upload/<%=neighborNoti[i].photo%>">
+                                <%if (neighborNoti[i].photo != null && neighborNoti[i].photo != "") {%>
+                                    <img src="uploads/<%=neighborNoti[i].photo%>">
                                 <%} else {%>
-                                    <img src="statics/common/img/test_avatar.png">
+                                    <img src="statics/common/img/test_avatar.jpg">
                                 <%} %>
                             </div>
                             <div class="col-8 sender-info">
@@ -626,10 +626,10 @@
                     <div class="message-box">
                         <div class="msg-item msg-sender row noti">
                             <div class="col-1 avatar">
-                                <%if (joinBlockNoti[i].photo != null && joinBlockNoti[i].photo != "")%>
-                                    <img src="upload/<%=joinBlockNoti[i].photo%>">
+                                <%if (joinBlockNoti[i].photo != null && joinBlockNoti[i].photo != "") {%>
+                                    <img src="uploads/<%=joinBlockNoti[i].photo%>">
                                 <%} else {%>
-                                    <img src="statics/common/img/test_avatar.png">
+                                    <img src="statics/common/img/test_avatar.jpg">
                                 <%} %>
                             </div>
                             <div class="col-8 sender-info">
