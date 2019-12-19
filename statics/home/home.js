@@ -33,13 +33,16 @@
 		accOrDenyJoinBlock: 'api/updateBlock',
 		updateProfile: 'api/updateProfile',
 		unreadNum: 'api/numMessage',
-		updateMsgToRead: 'api/msgToRead'
+		updateMsgToRead: 'api/msgToRead',
+		uploadAvatar: 'api/uploadAvatar',
+		getUserInfo: 'api/getUserInfo',
 	};
 
 	var homepage = {
 		init: function () {
 			this.initType();
 			$('#msgTplContainer').empty();
+			this.initAvatar();
 			this.initNoti();
 			this.initUnreadNum();
 			this.getFeed(url.getFriendFeed, 0);
@@ -70,6 +73,28 @@
 			this.accOrDenyJoinBlock();
 			this.editIntro();
 			this.showUnreadMsg();
+			this.uploadAvatar();
+		},
+
+		initAvatar: function () {
+			$.ajax({
+				url: url.getUserInfo,
+				method: 'GET',
+				dataType: 'json',
+				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
+					if (res.data.photo != null && res.data.photo != '') {
+						$('.my-avatar').empty().append('<img src="uploads/' + res.data.photo +  '">');
+					}
+					
+				},
+				error: function () {
+					alert('HTTP request error!');
+				}
+			});
 		},
 
 		initType: function () {
@@ -79,6 +104,10 @@
 				dataType: 'json',
 				data: {},
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0) {
 						var $types = $('#inputSelectType');
 						var template = '<option selected>Choose to send to friends, neighbors or block</option>';
@@ -117,6 +146,10 @@
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0) {
 						var $receiver = $('#inputReceiver');
 						var template = '<option selected>Choose the person</option>';
@@ -152,6 +185,10 @@
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					// add num
 					var totalNum = res.data.totalNum;
 					if (totalNum > 0) {
@@ -173,6 +210,10 @@
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					var totalNum = res.data.num;
 					if (totalNum > 0) {
 						$('#msgNum').removeClass('hide').html(totalNum);
@@ -188,9 +229,6 @@
 			var me = this;
 			var params = {};
 			params.unread = unread;
-			// if (toRead) {
-			// 	me.updateMsgToRead();
-			// }
 			
 
 			$.ajax({
@@ -199,6 +237,10 @@
 				dataType: 'json',
 				data: params,
 				success: function(res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0) {
 
 						me.initMsg(res, empty);
@@ -224,6 +266,10 @@
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					me.initUnreadNum();
 				},
 				error: function (e) {
@@ -239,6 +285,10 @@
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0) {
 						me.initMapMarker(res.data, 'statics/common/img/christmas-person.png', 'firstname');
 					}
@@ -283,6 +333,10 @@
 					dataType: 'json',
 					data: params,
 					success: function(res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0) {
 							alert(res.message);
 							$('#sendMsgForm')[0].reset();
@@ -317,6 +371,10 @@
 					dataType: 'json',
 					data: params,
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0) {
 							$replyText.val('');
 							$('#msgTplContainer').empty();
@@ -363,9 +421,14 @@
 					dataType: 'json',
 
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0) {
 							$.cookie('uid', null);
 							window.location.replace('login');
+							return false;
 						} else {
 							alert(res.message);
 						}
@@ -389,6 +452,10 @@
 					dataType: 'json',
 					data: params,
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0) {
 							// show msgBox
 							$('.center-box').addClass('hide');
@@ -486,6 +553,10 @@
 				method: 'GET',
 				dataType: 'json',
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					var bt = baidu.template;
 					var html = bt('profileTpl', res);
 					$('#profileBox').empty().append(html);
@@ -522,6 +593,10 @@
 	                	dataType: 'json',
 	                	data: params,
 	                	success: function(res) {
+	                		if (res.status == -2) {
+								window.location.replace('login');
+								return false;
+							}
 	                		if (res.status == 0) {
 	                			$location = $('#addLocation').find('.location');
 	                			$location.empty().append(res.data);
@@ -550,6 +625,10 @@
 				dataType: 'json',
 
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						var bt = baidu.template;
 						var html = bt('friendTpl', res);
@@ -594,6 +673,10 @@
 				data: params,
 
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						me.listFriends();
 						me.availableFriend();
@@ -615,6 +698,10 @@
 				dataType: 'json',
 
 				success: function (res){
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						var bt=baidu.template;
 						var html = bt('RecomTpl', res);
@@ -643,6 +730,10 @@
 					data: params,
 
 					success: function (res){
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0){
 							me.listFriends();
 							me.availableFriend();
@@ -665,6 +756,10 @@
 				dataType:'json',
 
 				success: function (res){
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						if(res.data.length>0){
 							var bt=baidu.template;
@@ -690,6 +785,10 @@
 				dataType:'json',
 
 				success: function (res){
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						$('.block-tip').addClass('hide');
 						if (res.data.length == 0) {
@@ -730,6 +829,10 @@
 					data: params,
 
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status != 0){
 							alert(res.message);
 						} else {
@@ -758,6 +861,10 @@
 					data: params,
 
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0){
 							me.listBlocks();
 						} else {
@@ -778,6 +885,10 @@
 				dataType: 'json',
 
 				success: function (res){
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						var bt=baidu.template;
 						var html = bt('neighTpl', res);
@@ -834,6 +945,10 @@
 				data: params,
 
 				success: function (res) {
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status != 0){
 						alert(res.message);
 					} else {
@@ -863,6 +978,10 @@
 					dataType: 'json',
 					data: params,
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0){
 							me.initNoti();
 						} else {
@@ -884,6 +1003,10 @@
 				dataType: 'json',
 
 				success: function (res){
+					if (res.status == -2) {
+						window.location.replace('login');
+						return false;
+					}
 					if (res.status == 0){
 						var bt=baidu.template;
 						var html = bt('RecomTpl_n', res);
@@ -920,6 +1043,10 @@
 					dataType: 'json',
 					data: params,
 					success: function (res) {
+						if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
 						if (res.status == 0) {
 							me.initProfile();
 						} else {
@@ -929,6 +1056,33 @@
 						alert('HTTP request error!');
 					}
 				});
+			});
+		},
+
+		uploadAvatar: function () {
+			var me = this;
+
+			$('#profileBox').delegate('#uploadAvatar', 'change', function() {
+				formdata = new FormData();
+				$this = $(this);
+				if ($this.prop('files').length > 0) {
+			        file = $this.prop('files')[0];
+			        formdata.append("avatar", file);
+			    }
+			    $.ajax({
+			    	url: url.uploadAvatar,
+			    	type: 'POST',
+			    	data: formdata,
+			    	processData: false,
+    				contentType: false,
+    				success: function(res) {
+    					if (res.status == -2) {
+							window.location.replace('login');
+							return false;
+						}
+    					me.initProfile();
+    				}
+			    });
 			});
 		}
 	};

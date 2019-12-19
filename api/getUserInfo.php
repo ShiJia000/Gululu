@@ -16,7 +16,7 @@ class getUserInfo extends api {
 		$query = mysqli_query($this->conn, $sql);
 		$data = mysqli_fetch_all($query, MYSQLI_ASSOC);
 
-		return $data;
+		return $data[0];
 	}
 }
 
